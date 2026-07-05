@@ -1,8 +1,7 @@
 "use client"
 
 import { useEffect, useRef } from "react"
-import { gsap } from "gsap"
-import { ScrollTrigger } from "gsap/ScrollTrigger"
+import { gsap, ScrollTrigger, prefersReducedMotion } from "@/lib/gsap"
 
 const supporters = [
   "HAX", "ESA", "Federal Ministry", "TUM", "Fraunhofer CML",
@@ -31,6 +30,31 @@ export default function PartnersSection() {
           toggleActions: "play none none reverse",
         },
       })
+
+      // Velocity-reactive skew: fast scrolling leans the marquees (depth pass)
+      if (!prefersReducedMotion()) {
+        const marquees = sectionRef.current.querySelectorAll(".marquee-inner")
+        const proxy = { skew: 0 }
+        const applySkew = gsap.quickSetter(marquees, "skewX", "deg")
+        ScrollTrigger.create({
+          trigger: sectionRef.current,
+          start: "top bottom",
+          end: "bottom top",
+          onUpdate: (self) => {
+            const velocity = gsap.utils.clamp(-10, 10, self.getVelocity() / -300)
+            if (Math.abs(velocity) > Math.abs(proxy.skew)) {
+              proxy.skew = velocity
+              gsap.to(proxy, {
+                skew: 0,
+                duration: 0.7,
+                ease: "power3.out",
+                overwrite: true,
+                onUpdate: () => applySkew(proxy.skew),
+              })
+            }
+          },
+        })
+      }
     }, sectionRef)
     return () => ctx.revert()
   }, [])
