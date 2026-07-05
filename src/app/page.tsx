@@ -1,65 +1,246 @@
-import Image from "next/image";
+"use client"
+
+import { useEffect, useRef } from "react"
+import { gsap } from "gsap"
+import HeroSection from "@/components/HeroSection"
+import IntroSection from "@/components/IntroSection"
+import ProblemSection from "@/components/ProblemSection"
+import SolutionSection from "@/components/SolutionSection"
+import ShiftSection from "@/components/ShiftSection"
+import TechSection from "@/components/TechSection"
+import WhyUsSection from "@/components/WhyUsSection"
+import PartnersSection from "@/components/PartnersSection"
+import FaqSection from "@/components/FaqSection"
+
+const loaderCopy = [
+  "Low Emission Ocean Transportation",
+  "Smart Maritime Logistics",
+  "Sustainable Freight Routing",
+]
+
+const backers = [
+  "Bayern Kapital",
+  "SOSV",
+  "Lowercarbon",
+  "FTTF",
+  "Future Planet",
+  "Farvatn",
+]
 
 export default function Home() {
+  const loadingRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const el = loadingRef.current
+    if (!el) return
+
+    const previousOverflow = document.body.style.overflow
+    document.body.style.overflow = "hidden"
+    el.setAttribute("aria-hidden", "false")
+
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    if (prefersReducedMotion) {
+      el.style.display = "none"
+      el.setAttribute("aria-hidden", "true")
+      document.body.style.overflow = previousOverflow
+      return
+    }
+
+    let frame = 0
+    const startedAt = performance.now()
+    const duration = 1850
+
+    const updateProgress = (now: number) => {
+      const elapsed = now - startedAt
+      const nextProgress = Math.min(100, Math.round((elapsed / duration) * 100))
+      const nextCopyIndex = Math.min(
+        loaderCopy.length - 1,
+        Math.floor((nextProgress / 100) * loaderCopy.length),
+      )
+
+      if (countValue) {
+        countValue.textContent = String(nextProgress).padStart(2, "0")
+      }
+      if (loaderTitle) {
+        loaderTitle.textContent = loaderCopy[nextCopyIndex]
+      }
+
+      if (nextProgress < 100) {
+        frame = requestAnimationFrame(updateProgress)
+      }
+    }
+
+    frame = requestAnimationFrame(updateProgress)
+
+    const items = el.querySelectorAll<HTMLDivElement>(".trans__item")
+    const logo = el.querySelector<HTMLElement>(".trans__logo")
+    const home = el.querySelector<HTMLElement>(".trans__home")
+    const bar = el.querySelector<HTMLElement>(".trans__count-bar-inner")
+    const countValue = el.querySelector<HTMLElement>(".trans__count-value")
+    const loaderTitle = el.querySelector<HTMLElement>(".trans__home-title")
+
+    gsap.set(items, {
+      scaleY: 0,
+      transformOrigin: "bottom",
+    })
+    if (logo) {
+      gsap.set(logo, {
+        y: -24,
+        opacity: 0,
+        scale: 0.96,
+      })
+    }
+    if (home) {
+      gsap.set(home, {
+        y: 36,
+        opacity: 0,
+      })
+    }
+    if (bar) {
+      gsap.set(bar, {
+        width: "0%",
+      })
+    }
+
+    const timeline = gsap.timeline({
+      onComplete: () => {
+        el.style.display = "none"
+        el.setAttribute("aria-hidden", "true")
+        document.body.style.overflow = previousOverflow
+      },
+    })
+
+    timeline
+      .to(items, {
+        scaleY: 1,
+        duration: 0.62,
+        stagger: 0.045,
+        ease: "power3.inOut",
+      })
+
+    if (logo) {
+      timeline.to(logo, {
+        y: 0,
+        opacity: 1,
+        scale: 1,
+        duration: 0.55,
+        ease: "power3.out",
+      }, "-=0.25")
+    }
+
+    if (home) {
+      timeline.to(home, {
+        y: 0,
+        opacity: 1,
+        duration: 0.75,
+        ease: "power3.out",
+      }, "-=0.35")
+    }
+
+    if (bar) {
+      timeline.to(bar, {
+        width: "100%",
+        duration: 1.7,
+        ease: "power2.inOut",
+      }, 0.15)
+    }
+
+    timeline.add("fadeOut", 2.2)
+
+    if (home) {
+      timeline.to(home, {
+        y: -24,
+        opacity: 0,
+        duration: 0.42,
+        ease: "power2.in",
+      }, "fadeOut")
+    }
+
+    if (logo) {
+      timeline.to(logo, {
+        y: -18,
+        opacity: 0,
+        scale: 0.92,
+        duration: 0.42,
+        ease: "power2.in",
+      }, "fadeOut")
+    }
+
+    timeline.to(items, {
+      scaleY: 0,
+      duration: 0.62,
+      stagger: 0.045,
+      ease: "power3.inOut",
+      transformOrigin: "top",
+    }, "fadeOut+=0.3")
+
+    return () => {
+      cancelAnimationFrame(frame)
+      timeline.kill()
+      document.body.style.overflow = previousOverflow
+    }
+  }, [])
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <>
+      <div ref={loadingRef} className="trans__wrapper" role="status" aria-label="Loading Global Shipping and Logistics">
+        <div className="trans__logo" aria-hidden="true">
+          <svg viewBox="0 0 64 64" fill="none">
+            <rect x="8" y="8" width="48" height="48" rx="18" fill="url(#loaderLogoGradient)" />
+            <path d="M18 39.5L32 19.5L46 39.5H18Z" fill="white" />
+            <path d="M23 39.5H41" stroke="white" strokeWidth="3" strokeLinecap="round" />
+            <path d="M16 45H48" stroke="white" strokeWidth="3" strokeLinecap="round" opacity="0.75" />
+            <defs>
+              <linearGradient id="loaderLogoGradient" x1="8" y1="8" x2="56" y2="56" gradientUnits="userSpaceOnUse">
+                <stop stopColor="#81C784" />
+                <stop offset="1" stopColor="#42A5F5" />
+              </linearGradient>
+            </defs>
+          </svg>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+
+        <div className="trans__inner" aria-hidden="true">
+          {[...Array(6)].map((_, i) => (
+            <div key={i} className="trans__item" />
+          ))}
         </div>
-      </main>
-    </div>
-  );
+
+        <div className="trans__home">
+          <div className="trans__home-inner">
+            <div className="trans__count" aria-hidden="true">
+              <div className="trans__count-number">
+                <span className="trans__count-value">00</span>
+                <span className="trans__count-percent">%</span>
+              </div>
+              <div className="trans__count-bar">
+                <div className="trans__count-bar-inner" />
+              </div>
+            </div>
+
+            <div>
+              <h1 className="trans__home-title">{loaderCopy[0]}</h1>
+              <div className="trans__backers">
+                <div className="trans__backers-label">Backed by top-tier investors</div>
+                <div className="trans__backers-inner">
+                  {backers.map((backer) => (
+                    <span key={backer}>{backer}</span>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <HeroSection />
+      <IntroSection />
+      <ProblemSection />
+      <SolutionSection />
+      <ShiftSection />
+      <TechSection />
+      <WhyUsSection />
+      <PartnersSection />
+      <FaqSection />
+    </>
+  )
 }
