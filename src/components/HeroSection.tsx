@@ -1,7 +1,23 @@
 "use client"
 
 import { useEffect, useRef } from "react"
-import { gsap } from "gsap"
+import dynamic from "next/dynamic"
+import { gsap, SplitText, EASE, prefersReducedMotion } from "@/lib/gsap"
+import { useMagnetic } from "@/components/motion/useMagnetic"
+
+const HeroGlobe = dynamic(() => import("@/components/globe/HeroGlobe"), {
+  ssr: false,
+  loading: () => <div className="w-full h-[340px]" aria-hidden="true" />,
+})
+
+const TICKER = [
+  "HAM→MIL · E45 · ON TIME",
+  "ROT→MAD · A62 · 12:40 CET",
+  "MIL→TUN · RO-RO · LOADING",
+  "HAM→WAW · A2 · ON TIME",
+  "MIL→IST · O-3 · IN TRANSIT",
+  "HAM→ROT · A1 · DELIVERED",
+]
 
 export default function HeroSection() {
   const sectionRef = useRef<HTMLDivElement>(null)
@@ -9,8 +25,11 @@ export default function HeroSection() {
   const titleRef = useRef<HTMLHeadingElement>(null)
   const subRef = useRef<HTMLDivElement>(null)
   const visualRef = useRef<HTMLDivElement>(null)
+  const ctaRef = useMagnetic<HTMLAnchorElement>(6)
 
   useEffect(() => {
+    if (prefersReducedMotion()) return
+
     const ctx = gsap.context(() => {
       if (shipRef.current) {
         gsap.to(shipRef.current, {
@@ -22,15 +41,33 @@ export default function HeroSection() {
         })
       }
 
-      const heroEls = [titleRef.current, subRef.current, visualRef.current].filter(
-        (el): el is HTMLHeadingElement | HTMLDivElement => Boolean(el),
+      // Masked line reveal on the display headline (loader gate is ~2.8s)
+      let split: SplitText | null = null
+      if (titleRef.current) {
+        split = SplitText.create(titleRef.current, {
+          type: "lines",
+          mask: "lines",
+          autoSplit: true,
+        })
+        gsap.from(split.lines, {
+          yPercent: 110,
+          duration: 1.05,
+          stagger: 0.09,
+          ease: EASE.enter,
+          delay: 0.15,
+        })
+      }
+
+      const heroEls = [subRef.current, visualRef.current].filter(
+        (el): el is HTMLDivElement => Boolean(el),
       )
       gsap.from(heroEls, {
         y: 54,
         opacity: 0,
         duration: 0.95,
         stagger: 0.14,
-        ease: "power3.out",
+        delay: 0.35,
+        ease: EASE.enterSoft,
       })
 
       if (visualRef.current) {
@@ -39,10 +76,12 @@ export default function HeroSection() {
           opacity: 0,
           duration: 0.72,
           stagger: 0.1,
-          delay: 0.25,
-          ease: "power3.out",
+          delay: 0.55,
+          ease: EASE.enterSoft,
         })
       }
+
+      return () => split?.revert()
     }, sectionRef)
 
     return () => ctx.revert()
@@ -99,7 +138,7 @@ export default function HeroSection() {
               </p>
 
               <div className="flex flex-wrap gap-4">
-                <a href="#contact" className="btn btn-pri btn-lg" data-popup="contact">
+                <a href="#contact" ref={ctaRef} className="btn btn-pri btn-lg" data-popup="contact">
                   Get started
                   <svg width="20" height="20" viewBox="0 0 32 32" fill="none">
                     <path fillRule="evenodd" clipRule="evenodd" d="M30.44 3.68L3 31.12.88 29l27.44-27.44L30.44 3.68z" fill="white"/>
@@ -139,20 +178,8 @@ export default function HeroSection() {
               </div>
             </div>
 
-            <div className="my-8">
-              <svg viewBox="0 0 460 260" className="w-full h-auto" fill="none">
-                <defs>
-                  <linearGradient id="heroRouteGradient" x1="40" y1="210" x2="420" y2="50" gradientUnits="userSpaceOnUse">
-                    <stop stopColor="#F2B04B" />
-                    <stop offset="1" stopColor="#E08A2E" />
-                  </linearGradient>
-                </defs>
-                <path className="hero__route-path" d="M40 210C110 120 150 188 210 126C282 52 340 116 420 50" />
-                <circle className="hero__route-dot" cx="40" cy="210" r="7" fill="#F2B04B" />
-                <circle className="hero__route-dot" cx="210" cy="126" r="7" fill="#F5C97E" style={{ animationDelay: "0.45s" }} />
-                <circle className="hero__route-dot" cx="420" cy="50" r="7" fill="#E08A2E" style={{ animationDelay: "0.9s" }} />
-                <path d="M78 224H382" stroke="rgba(255,255,255,.18)" strokeWidth="1" strokeDasharray="5 9" />
-              </svg>
+            <div className="my-4 -mx-2">
+              <HeroGlobe className="w-full h-[340px]" />
             </div>
 
             <div className="grid grid-cols-2 gap-4">
@@ -176,7 +203,21 @@ export default function HeroSection() {
           </div>
         </div>
 
-        <div className="mt-16 pt-8 border-t border-white/10">
+        {/* Live corridor ticker — telemetry voice */}
+        <div className="mt-14 -mx-6 border-y border-white/10 bg-white/[0.02]">
+          <div className="marquee py-2.5">
+            <div className="marquee-inner items-center gap-10 pr-10" style={{ animationDuration: "46s" }}>
+              {[...TICKER, ...TICKER].map((t, i) => (
+                <span key={i} className="flex items-center gap-10 whitespace-nowrap font-mono text-xs tracking-wider text-white/55">
+                  <span className="inline-block w-1.5 h-1.5 rounded-full bg-primary" aria-hidden="true" />
+                  {t}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-10 pt-2">
           <div className="text-xs text-white/50 uppercase tracking-widest mb-4">Trusted by industry leaders</div>
           <div className="flex flex-wrap items-center gap-8 opacity-60">
             <span className="text-white/70 text-lg font-semibold">DB Schenker</span>
