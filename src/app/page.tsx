@@ -7,6 +7,7 @@ import IntroSection from "@/components/IntroSection"
 import ProblemSection from "@/components/ProblemSection"
 import SolutionSection from "@/components/SolutionSection"
 import ShiftSection from "@/components/ShiftSection"
+import JourneySection from "@/components/JourneySection"
 import TechSection from "@/components/TechSection"
 import WhyUsSection from "@/components/WhyUsSection"
 import PartnersSection from "@/components/PartnersSection"
@@ -237,6 +238,7 @@ export default function Home() {
       <ProblemSection />
       <SolutionSection />
       <ShiftSection />
+      <JourneySection />
       <TechSection />
       <WhyUsSection />
       <PartnersSection />

@@ -648,6 +648,28 @@ html.lenis {
   transform: scale(1.08);
 }
 
+/* Film grain — overlays the whole cinematic section (DESIGN.md: ≤ 0.05).
+   Sits ABOVE content like real film grain; never touches child layout. */
+.grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  pointer-events: none;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Journey waypoints */
+.journey-stop--active .journey-stop-dot {
+  border-color: var(--color-primary);
+  background: var(--color-primary);
+  box-shadow: 0 0 16px oklch(0.78 0.15 75 / 0.6);
+}
+.journey-stop--active .journey-stop-name {
+  color: #fff;
+}
+
 /* Mobile nav */
 .header__nav {
   position: fixed;
