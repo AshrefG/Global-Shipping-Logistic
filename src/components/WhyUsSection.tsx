@@ -56,7 +56,7 @@ export default function WhyUsSection() {
 
           <div className="lg:col-span-7 lg:col-start-6 grid grid-cols-1 gap-8">
             {items.map((item, i) => (
-              <div key={i} className="why-item bg-white rounded-2xl p-8 shadow-sm hover:shadow-md transition-shadow">
+              <div key={i} className="why-item bg-surface border border-line rounded-2xl p-8">
                 <div className="flex items-start gap-6">
                   <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary-bg to-secondary-bg flex items-center justify-center flex-shrink-0">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-primary">

@@ -29,7 +29,7 @@ export default function IntroSection() {
   }, [])
 
   return (
-    <section id="about" ref={sectionRef} className="py-24 md:py-32 bg-white">
+    <section id="about" ref={sectionRef} className="py-24 md:py-32 bg-canvas">
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
           <div className="lg:col-span-3">
@@ -64,17 +64,19 @@ export default function IntroSection() {
                 </div>
 
                 <h3 className="text-xl font-medium text-gray-800 leading-relaxed">
-                  We are a logistics company based in Hamburg redefining how goods are transported across the ocean.
+                  We are a logistics company based in Hamburg redefining how freight moves by road.
                 </h3>
 
                 <p className="text-gray-600 leading-relaxed">
-                  Global Shipping and Logistics (GSL) is a maritime logistics company based in Hamburg, Germany. 
-                  Founded in 2022, we are on a mission to make global shipping sustainable and economically viable.
+                  Global Shipping &amp; Logistics (GSL) is a road-freight-first logistics company based in
+                  Hamburg, Germany. Founded in 2022, we run FTL, LTL and cross-border corridors —
+                  door-to-door, tracked live, with lower emissions per kilometre.
                 </p>
 
                 <p className="text-gray-600 leading-relaxed">
-                  We believe that innovative approaches are essential to decarbonize the shipping industry. 
-                  Our smart logistics solutions leverage cutting-edge technology to transport goods to any port in the world.
+                  We believe land transport is where logistics is won or lost. Our telematics-driven
+                  fleet and AI-routed corridors move goods to any address — with ocean and rail as
+                  complementary modes when the lane calls for it.
                 </p>
 
                 <a href="#services" className="reveal text-secondary font-medium hover:text-primary transition-colors no-underline inline-flex items-center gap-2 group">

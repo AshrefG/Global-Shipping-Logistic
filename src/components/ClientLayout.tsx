@@ -2,13 +2,10 @@
 
 import { useEffect, useRef } from "react"
 import Lenis from "lenis"
-import { gsap } from "gsap"
-import { ScrollTrigger } from "gsap/ScrollTrigger"
+import { gsap, ScrollTrigger } from "@/lib/gsap"
 import Header from "./Header"
 import Footer from "./Footer"
 import ContactModal from "./ContactModal"
-
-gsap.registerPlugin(ScrollTrigger)
 
 export default function ClientLayout({ children }: { children: React.ReactNode }) {
   const lenisRef = useRef<Lenis | null>(null)

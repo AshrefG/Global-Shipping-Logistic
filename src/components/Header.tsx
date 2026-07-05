@@ -42,7 +42,7 @@ export default function Header() {
                 <path d="M3 3h18v18H3V3zm2 2v14h14V5H5zm3 3h8v2H8V8zm0 4h8v2H8v-2zm0 4h5v2H8v-2z"/>
               </svg>
             </div>
-            <span className="font-bold text-lg hidden sm:block" style={{color: scrolled ? "#1a1a2e" : "white"}}>
+            <span className="font-bold text-lg hidden sm:block text-ink">
               GSL
             </span>
           </a>
@@ -52,8 +52,7 @@ export default function Header() {
               <a
                 key={link.label}
                 href={link.href}
-                className="text-sm font-medium transition-colors duration-300 hover:text-primary"
-                style={{color: scrolled ? "#374151" : "rgba(255,255,255,0.85)"}}
+                className="text-sm font-medium transition-colors duration-300 text-ink-muted hover:text-primary"
               >
                 {link.label}
               </a>

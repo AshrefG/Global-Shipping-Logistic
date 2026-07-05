@@ -26,7 +26,7 @@ export default function SolutionSection() {
   }, [])
 
   return (
-    <section id="services" ref={sectionRef} className="py-24 md:py-32 bg-white">
+    <section id="services" ref={sectionRef} className="py-24 md:py-32 bg-canvas">
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-16 solu-el">
           <div className="lg:col-span-4">

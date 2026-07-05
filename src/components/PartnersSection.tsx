@@ -36,7 +36,7 @@ export default function PartnersSection() {
   }, [])
 
   return (
-    <section ref={sectionRef} className="py-24 md:py-32 bg-white overflow-hidden">
+    <section ref={sectionRef} className="py-24 md:py-32 bg-canvas overflow-hidden">
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-16 partner-el">
           <div className="lg:col-span-4">
