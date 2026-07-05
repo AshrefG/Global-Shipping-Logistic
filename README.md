@@ -1,8 +1,12 @@
 # Global Shipping & Logistics (GSL)
 
-Marketing and product site for **GSL** — a sustainable maritime freight company
-redefining ocean transportation with low-emission vessels, smart routing, and
-data-driven logistics.
+Marketing site for **GSL** — a **road-freight-first** logistics company:
+trucking (FTL/LTL), cross-border corridors, and last-mile, with ocean and other
+modes as complementary services in an integrated door-to-door network.
+
+> 🎬 A **dark-cinematic premium redesign** is underway on `dev` — see
+> [ROADMAP.md](./ROADMAP.md) (phases), [PRODUCT.md](./PRODUCT.md) (strategy),
+> and [DESIGN.md](./DESIGN.md) (visual system).
 
 ## Tech stack
 
@@ -58,7 +62,9 @@ src/
   GSAP's ScrollTrigger. Section-level scroll animations use GSAP; respect
   `prefers-reduced-motion` (the loader in `page.tsx` already does).
 - **Contact modal** is opened imperatively by adding `.active` to `.contact-popup`.
-- **Brand palette:** eco green → ocean blue gradient (`--primary` / `--secondary`).
+- **Brand palette:** legacy code uses eco green → blue gradient
+  (`--primary`/`--secondary`); the redesign replaces it with the dark
+  night-highway OKLCH system in [DESIGN.md](./DESIGN.md).
 
 ## Contributing
 

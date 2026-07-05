@@ -6,8 +6,12 @@ This version has breaking changes — APIs, conventions, and file structure may 
 
 # Project context
 
-**Global Shipping & Logistics (GSL)** — a marketing/product site for a sustainable
-maritime freight company (low-emission ocean transport, smart routing).
+**Global Shipping & Logistics (GSL)** — marketing site for a **road-freight-first**
+logistics company (trucking/FTL/LTL, cross-border corridors, last-mile; ocean as a
+complementary mode). A dark-cinematic premium redesign is in progress on `dev`:
+strategy in `PRODUCT.md`, visual system in `DESIGN.md`, phases in `ROADMAP.md` —
+read all three before UI work. New UI must follow DESIGN.md (dark OKLCH tokens,
+amber accent, Archivo display + Geist), not the legacy green/blue theme.
 
 ## Stack
 Next.js 16 (App Router) · React 19 · TypeScript 5 (strict) · Tailwind CSS 4 ·
