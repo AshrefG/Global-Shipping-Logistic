@@ -546,34 +546,68 @@ html.lenis {
 .hero__route-dot {
   animation: routePulse 2.2s ease-in-out infinite;
 }
+/* Spec chips inside the globe card — compact glass, soft corners */
 .hero__metric-card {
-  border: 1px solid oklch(1 0 0 / 0.14);
-  background: oklch(1 0 0 / 0.08);
-  backdrop-filter: blur(14px);
-  box-shadow: inset 0 1px 0 oklch(1 0 0 / 0.08);
+  padding: 12px 15px;
+  border-radius: 13px;
+  border: 1px solid oklch(1 0 0 / 0.09);
+  background: oklch(1 0 0 / 0.045);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: inset 0 1px 0 oklch(1 0 0 / 0.06);
 }
 .hero__metric-value {
   display: block;
   font-family: var(--font-mono), monospace;
-  font-size: clamp(24px, 3vw, 36px);
-  font-weight: 700;
-  line-height: 1;
-  letter-spacing: -0.04em;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  color: oklch(0.97 0.02 85);
 }
 .hero__metric-label {
   display: block;
-  margin-top: 7px;
-  color: oklch(1 0 0 / 0.64);
-  font-size: 11px;
+  margin-top: 4px;
+  color: oklch(1 0 0 / 0.5);
+  font-size: 10px;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.11em;
 }
-.hero__metric-card--dark {
-  background: oklch(0.08 0.008 255 / 0.42);
+
+/* Left hero stats — one glass panel, thin cell dividers, no per-card borders */
+.hero__stat-panel {
+  border-radius: 18px;
+  border: 1px solid oklch(1 0 0 / 0.1);
+  background: oklch(0.08 0.008 255 / 0.4);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: inset 0 1px 0 oklch(1 0 0 / 0.06);
+  overflow: hidden;
 }
-.hero__metric-card--dark .hero__metric-label {
-  color: oklch(1 0 0 / 0.58);
+.hero__stat {
+  padding: 15px 18px;
+}
+.hero__stat + .hero__stat {
+  border-left: 1px solid oklch(1 0 0 / 0.08);
+}
+.hero__stat-value {
+  display: block;
+  font-family: var(--font-mono), monospace;
+  font-size: clamp(21px, 2.3vw, 29px);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: #fff;
+}
+.hero__stat-label {
+  display: block;
+  margin-top: 7px;
+  color: oklch(1 0 0 / 0.55);
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.13em;
 }
 
 @keyframes heroFloat {

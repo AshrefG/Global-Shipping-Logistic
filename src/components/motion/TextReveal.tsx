@@ -1,6 +1,6 @@
 "use client"
 
-import { useRef, type ElementType, type ReactNode } from "react"
+import { createElement, useRef, type ElementType, type ReactNode } from "react"
 import { useGSAP } from "@gsap/react"
 import { gsap, SplitText, EASE, prefersReducedMotion } from "@/lib/gsap"
 
@@ -59,6 +59,7 @@ export default function TextReveal({
     { scope: ref },
   )
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  return <Tag ref={ref as any} className={className}>{children}</Tag>
+  // Passing the ref object to createElement is ref forwarding, not a read.
+  // eslint-disable-next-line react-hooks/refs
+  return createElement(Tag, { ref, className }, children)
 }
