@@ -7,11 +7,15 @@ Status legend: 🟢 done · 🟡 in progress · ⚪ planned
 Nav links in `Header.tsx` point to anchors that have no matching content yet.
 Either build the sections or make the links resolve.
 
-- ⚪ **About us** (`#about`) — company story / mission section or `/about` page.
-- ⚪ **Services** (`#services`) — freight offerings; anchor an existing section or add one.
-- ⚪ **Career** (`#career`) — open roles + application CTA.
-- ⚪ **News & Media** (`#news`) — press / blog index.
-- ⚪ Ensure every nav anchor scrolls to a real target (add `id`s to sections).
+- 🟢 **Nav anchors resolve** — all `Header` links scroll to a real target via Lenis
+  smooth-scroll with a fixed-header offset (`ClientLayout.tsx`). `#about`→Intro,
+  `#services`→Solution, `#tech`→Tech; `#news`/`#career` land on the Footer as an
+  **interim** target until dedicated sections exist.
+- ⚪ **About us** (`#about`) — dedicated company story / mission section (currently reuses Intro).
+- ⚪ **Services** (`#services`) — expand the Solution section into a full services offering.
+- ⚪ **Career** (`#career`) — open roles + application CTA (interim: Footer).
+- ⚪ **News & Media** (`#news`) — press / blog index (interim: Footer newsletter).
+- ⚪ **Legal / Privacy** (`#legal`, `#privacy`) — Footer links still have no target.
 
 ## Next — wire up the shell
 
