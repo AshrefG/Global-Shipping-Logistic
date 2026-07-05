@@ -37,11 +37,11 @@ export default function Footer() {
           {/* Links */}
           <div id="career" className="lg:col-span-3 lg:col-start-7 scroll-mt-24">
             <div className="flex flex-col gap-4">
-              <a href="#" className="text-lg text-gray-300 hover:text-white transition-colors no-underline">Home.</a>
-              <a href="#about" className="text-lg text-gray-300 hover:text-white transition-colors no-underline">About. <span className="text-primary text-xs ml-1">We&apos;re hiring</span></a>
-              <a href="#tech" className="text-lg text-gray-300 hover:text-white transition-colors no-underline">Technology.</a>
-              <a href="#news" className="text-lg text-gray-300 hover:text-white transition-colors no-underline">News & Media.</a>
-              <a href="#contact" className="text-lg text-gray-300 hover:text-white transition-colors no-underline" data-popup="contact">Get in touch.</a>
+              <a href="#" className="text-lg text-gray-700 hover:text-white transition-colors no-underline">Home.</a>
+              <a href="#about" className="text-lg text-gray-700 hover:text-white transition-colors no-underline">About. <span className="text-primary text-xs ml-1">We&apos;re hiring</span></a>
+              <a href="#tech" className="text-lg text-gray-700 hover:text-white transition-colors no-underline">Technology.</a>
+              <a href="#news" className="text-lg text-gray-700 hover:text-white transition-colors no-underline">News & Media.</a>
+              <a href="#contact" className="text-lg text-gray-700 hover:text-white transition-colors no-underline" data-popup="contact">Get in touch.</a>
             </div>
           </div>
 
@@ -49,7 +49,7 @@ export default function Footer() {
           <div className="lg:col-span-4 lg:col-start-9">
             <div className="mb-6">
               <div className="text-gray-400 text-xs uppercase tracking-wider mb-2">Main Office</div>
-              <p className="text-sm text-gray-300">
+              <p className="text-sm text-gray-700">
                 Global Shipping & Logistics GmbH<br />
                 Am Sandtorkai 50<br />
                 20457 Hamburg<br />

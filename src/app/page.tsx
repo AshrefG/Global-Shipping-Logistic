@@ -13,9 +13,9 @@ import PartnersSection from "@/components/PartnersSection"
 import FaqSection from "@/components/FaqSection"
 
 const loaderCopy = [
-  "Low Emission Ocean Transportation",
-  "Smart Maritime Logistics",
-  "Sustainable Freight Routing",
+  "Low Emission Road Freight",
+  "Cross-Border Trucking Network",
+  "Door-to-Door. Data-Driven.",
 ]
 
 const backers = [
@@ -192,8 +192,8 @@ export default function Home() {
             <path d="M16 45H48" stroke="white" strokeWidth="3" strokeLinecap="round" opacity="0.75" />
             <defs>
               <linearGradient id="loaderLogoGradient" x1="8" y1="8" x2="56" y2="56" gradientUnits="userSpaceOnUse">
-                <stop stopColor="#81C784" />
-                <stop offset="1" stopColor="#42A5F5" />
+                <stop stopColor="#F2B04B" />
+                <stop offset="1" stopColor="#E08A2E" />
               </linearGradient>
             </defs>
           </svg>

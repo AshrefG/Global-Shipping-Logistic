@@ -1,38 +1,66 @@
 @import "tailwindcss";
 
+/*
+  Night-highway design system (DESIGN.md).
+  Dark asphalt canvas, warm-white ink, single amber accent used like
+  headlights. The legacy gray-* scale is INVERTED so gray-900 is light ink
+  and gray-50 is a dark elevated surface — legacy sections written for a
+  light theme land on the dark system without per-line rewrites.
+*/
 @theme inline {
-  --color-primary: #4CAF50;
-  --color-primary-light: #66BB6A;
-  --color-primary-lighter: #81C784;
-  --color-primary-lightest: #A5D6A7;
-  --color-primary-bg: #E8F5E9;
-  --color-primary-dark: #388E3C;
-  --color-secondary: #42A5F5;
-  --color-secondary-light: #64B5F6;
-  --color-secondary-lighter: #90CAF9;
-  --color-secondary-lightest: #BBDEFB;
-  --color-secondary-bg: #E3F2FD;
-  --color-secondary-dark: #1976D2;
-  --color-accent: #FF6F00;
-  --color-dark: #1a1a2e;
-  --color-dark-2: #16213e;
-  --color-gray-50: #f9fafb;
-  --color-gray-100: #f3f4f6;
-  --color-gray-200: #e5e7eb;
-  --color-gray-300: #d1d5db;
-  --color-gray-400: #9ca3af;
-  --color-gray-500: #6b7280;
-  --color-gray-600: #4b5563;
-  --color-gray-700: #374151;
-  --color-gray-800: #1f2937;
-  --color-gray-900: #111827;
+  /* Amber accent family (legacy "primary" green remapped) */
+  --color-primary: oklch(0.78 0.15 75);
+  --color-primary-light: oklch(0.82 0.13 78);
+  --color-primary-lighter: oklch(0.86 0.11 80);
+  --color-primary-lightest: oklch(0.9 0.08 82);
+  --color-primary-bg: oklch(0.24 0.045 75);
+  --color-primary-dark: oklch(0.7 0.18 55);
+  /* Secondary (legacy blue) folded into the warm family — one accent voice */
+  --color-secondary: oklch(0.8 0.1 85);
+  --color-secondary-light: oklch(0.84 0.09 85);
+  --color-secondary-lighter: oklch(0.87 0.08 85);
+  --color-secondary-lightest: oklch(0.9 0.06 85);
+  --color-secondary-bg: oklch(0.24 0.035 85);
+  --color-secondary-dark: oklch(0.72 0.13 70);
+  --color-accent: oklch(0.7 0.18 55);
+
+  /* Deep surfaces */
+  --color-dark: oklch(0.1 0.01 255);
+  --color-dark-2: oklch(0.13 0.012 255);
+
+  /* Semantic tokens for new (Phase 1+) work */
+  --color-canvas: oklch(0.14 0.01 255);
+  --color-surface: oklch(0.19 0.012 255);
+  --color-surface-2: oklch(0.23 0.014 255);
+  --color-ink: oklch(0.965 0.004 90);
+  --color-ink-muted: oklch(0.74 0.012 255);
+  --color-line: oklch(0.32 0.01 255);
+
+  /* Inverted neutral scale (dark theme) */
+  --color-gray-50: oklch(0.17 0.011 255);
+  --color-gray-100: oklch(0.21 0.012 255);
+  --color-gray-200: oklch(0.28 0.012 255);
+  --color-gray-300: oklch(0.36 0.012 255);
+  --color-gray-400: oklch(0.64 0.012 255);
+  --color-gray-500: oklch(0.7 0.012 255);
+  --color-gray-600: oklch(0.76 0.01 255);
+  --color-gray-700: oklch(0.84 0.008 255);
+  --color-gray-800: oklch(0.9 0.006 255);
+  --color-gray-900: oklch(0.965 0.004 90);
+
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --font-display: var(--font-archivo);
 }
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: oklch(0.14 0.01 255);
+  --foreground: oklch(0.965 0.004 90);
+  /* Semantic z-scale */
+  --z-nav: 100;
+  --z-overlay: 200;
+  --z-modal: 300;
+  --z-loader: 400;
 }
 
 body {
@@ -44,6 +72,27 @@ body {
 
 html {
   scroll-behavior: auto;
+}
+
+::selection {
+  background: var(--color-primary);
+  color: oklch(0.15 0.03 75);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+h1, h2, h3 {
+  text-wrap: balance;
+}
+
+/* Display voice: Archivo, wide + heavy — highway-signage DNA */
+.font-display,
+.trans__home-title {
+  font-family: var(--font-display), var(--font-sans), sans-serif;
+  font-stretch: 118%;
 }
 
 /* Lenis styles */
@@ -63,27 +112,11 @@ html.lenis {
   pointer-events: none;
 }
 
-/* Section animations */
-.section-hidden {
-  opacity: 0;
-  transform: translateY(60px);
-  transition: opacity 0.8s ease, transform 0.8s ease;
-}
-.section-visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* Reveal animations */
-.reveal {
-  opacity: 0;
-  transform: translateY(40px);
-  transition: opacity 0.7s ease, transform 0.7s ease;
-}
-.reveal.revealed {
-  opacity: 1;
-  transform: translateY(0);
-}
+/*
+  Reveal elements are VISIBLE by default (DESIGN.md: reveals enhance an
+  already-visible state). GSAP's .from() tweens own the hidden state only
+  while an animation is actually running — never CSS.
+*/
 
 /* Marquee */
 .marquee {
@@ -111,21 +144,26 @@ html.lenis {
   justify-content: center;
   gap: 8px;
   border-radius: 9999px;
-  font-weight: 500;
-  transition: all 0.3s ease;
+  font-weight: 600;
+  transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
   cursor: pointer;
   border: none;
   text-decoration: none;
 }
 .btn-pri {
-  background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light));
-  color: white;
+  background: var(--color-primary);
+  color: oklch(0.17 0.03 75);
 }
 .btn-pri:hover {
-  background: linear-gradient(135deg, var(--color-primary-dark), var(--color-primary));
+  background: var(--color-primary-dark);
+  color: oklch(0.14 0.03 55);
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(76, 175, 80, 0.3);
+  box-shadow: 0 8px 30px oklch(0.78 0.15 75 / 0.25);
 }
+/* Legacy inline SVGs inside primary buttons hardcode white fills/strokes;
+   pull them onto the button's ink so amber buttons keep contrast. */
+.btn-pri svg [fill="white"] { fill: currentColor; }
+.btn-pri svg [stroke="white"] { stroke: currentColor; }
 .btn-lg {
   padding: 14px 32px;
   font-size: 16px;
@@ -162,7 +200,7 @@ html.lenis {
 
 /* FAQ */
 .faq-item {
-  border-bottom: 1px solid var(--color-gray-200);
+  border-bottom: 1px solid var(--color-line);
   cursor: pointer;
 }
 .faq-item__head {
@@ -226,15 +264,15 @@ html.lenis {
   top: 0;
   left: 0;
   width: 100%;
-  z-index: 100;
+  z-index: var(--z-nav);
   padding: 16px 0;
   transition: background 0.3s ease, padding 0.3s ease;
 }
 .header.scrolled {
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(10px);
+  background: oklch(0.12 0.01 255 / 0.85);
+  backdrop-filter: blur(12px);
   padding: 10px 0;
-  box-shadow: 0 1px 10px rgba(0, 0, 0, 0.05);
+  border-bottom: 1px solid oklch(0.32 0.01 255 / 0.5);
 }
 
 /* Popup / Modal */
@@ -244,7 +282,7 @@ html.lenis {
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 1000;
+  z-index: var(--z-modal);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -262,7 +300,7 @@ html.lenis {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.6);
+  background: oklch(0.05 0.005 255 / 0.7);
 }
 .popup__main {
   position: relative;
@@ -270,7 +308,8 @@ html.lenis {
   max-width: 600px;
   max-height: 85vh;
   overflow-y: auto;
-  background: white;
+  background: var(--color-surface);
+  border: 1px solid var(--color-line);
   border-radius: 16px;
   padding: 40px;
   transform: scale(0.9);
@@ -289,19 +328,20 @@ html.lenis {
   align-items: center;
   justify-content: center;
   border-radius: 50%;
+  color: var(--color-ink);
   transition: background 0.3s ease;
 }
 .popup__close:hover {
-  background: var(--color-gray-100);
+  background: var(--color-surface-2);
 }
 
-/* Loading transition */
+/* Loading transition — night asphalt gate */
 .trans__wrapper {
   position: fixed;
   inset: 0;
-  z-index: 9999;
+  z-index: var(--z-loader);
   overflow: hidden;
-  background: #07150f;
+  background: oklch(0.08 0.008 255);
   pointer-events: none;
 }
 .trans__logo {
@@ -316,15 +356,15 @@ html.lenis {
   align-items: center;
   justify-content: center;
   border-radius: 28px;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: oklch(1 0 0 / 0.06);
+  border: 1px solid oklch(1 0 0 / 0.12);
   backdrop-filter: blur(18px);
-  box-shadow: 0 18px 60px rgba(0, 0, 0, 0.28);
+  box-shadow: 0 18px 60px oklch(0 0 0 / 0.35);
 }
 .trans__logo svg {
   width: 58px;
   height: 58px;
-  filter: drop-shadow(0 12px 22px rgba(66, 165, 245, 0.28));
+  filter: drop-shadow(0 12px 22px oklch(0.78 0.15 75 / 0.3));
 }
 .trans__inner {
   position: absolute;
@@ -336,13 +376,13 @@ html.lenis {
 }
 .trans__item {
   flex: 1;
-  background: linear-gradient(160deg, #2e7d32, #1e88e5 55%, #66bb6a);
+  background: linear-gradient(170deg, oklch(0.17 0.012 255), oklch(0.1 0.01 255) 70%);
   transform: scaleY(0);
   transform-origin: bottom;
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+  box-shadow: inset 0 0 0 1px oklch(1 0 0 / 0.05);
 }
 .trans__item:nth-child(even) {
-  background: linear-gradient(160deg, #1b5e20, #1565c0 55%, #42a5f5);
+  background: linear-gradient(170deg, oklch(0.14 0.012 255), oklch(0.08 0.008 255) 70%);
 }
 .trans__home {
   position: absolute;
@@ -352,7 +392,7 @@ html.lenis {
   align-items: center;
   justify-content: center;
   padding: 110px 24px 56px;
-  color: white;
+  color: var(--color-ink);
   pointer-events: none;
 }
 .trans__home::before {
@@ -361,9 +401,9 @@ html.lenis {
   inset: 0;
   z-index: -1;
   background:
-    radial-gradient(circle at 18% 22%, rgba(129, 199, 132, 0.34), transparent 32%),
-    radial-gradient(circle at 78% 72%, rgba(66, 165, 245, 0.3), transparent 34%),
-    linear-gradient(135deg, rgba(7, 21, 15, 0.98), rgba(10, 35, 30, 0.98));
+    radial-gradient(circle at 20% 24%, oklch(0.78 0.15 75 / 0.14), transparent 34%),
+    radial-gradient(circle at 80% 74%, oklch(0.7 0.18 55 / 0.1), transparent 36%),
+    linear-gradient(135deg, oklch(0.08 0.008 255 / 0.98), oklch(0.12 0.012 255 / 0.98));
 }
 .trans__home-inner {
   width: min(1120px, 100%);
@@ -377,16 +417,17 @@ html.lenis {
   align-items: baseline;
   gap: 4px;
   line-height: 0.9;
+  font-family: var(--font-mono), monospace;
 }
 .trans__count-value {
   font-size: clamp(64px, 13vw, 152px);
-  font-weight: 750;
-  letter-spacing: -0.08em;
+  font-weight: 700;
+  letter-spacing: -0.06em;
 }
 .trans__count-percent {
   font-size: clamp(18px, 3vw, 34px);
   font-weight: 600;
-  color: rgba(255, 255, 255, 0.62);
+  color: oklch(1 0 0 / 0.55);
 }
 .trans__count-bar {
   width: min(320px, 100%);
@@ -394,22 +435,22 @@ html.lenis {
   margin-top: 28px;
   overflow: hidden;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.16);
+  background: oklch(1 0 0 / 0.14);
 }
 .trans__count-bar-inner {
   height: 100%;
   width: 0%;
   border-radius: inherit;
-  background: linear-gradient(90deg, var(--color-primary-lighter), var(--color-secondary-lighter));
-  box-shadow: 0 0 24px rgba(129, 199, 132, 0.5);
+  background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
+  box-shadow: 0 0 24px oklch(0.78 0.15 75 / 0.5);
 }
 .trans__home-title {
   margin: 0;
   max-width: 760px;
   font-size: clamp(38px, 7.6vw, 96px);
-  line-height: 0.96;
-  font-weight: 760;
-  letter-spacing: -0.07em;
+  line-height: 0.98;
+  font-weight: 800;
+  letter-spacing: -0.03em;
 }
 .trans__backers {
   max-width: 720px;
@@ -417,7 +458,7 @@ html.lenis {
 }
 .trans__backers-label {
   margin-bottom: 14px;
-  color: rgba(255, 255, 255, 0.58);
+  color: oklch(1 0 0 / 0.55);
   font-size: 12px;
   font-weight: 600;
   text-transform: uppercase;
@@ -434,12 +475,12 @@ html.lenis {
   min-height: 36px;
   padding: 8px 14px;
   border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid oklch(1 0 0 / 0.16);
+  background: oklch(1 0 0 / 0.06);
   backdrop-filter: blur(14px);
-  color: rgba(255, 255, 255, 0.84);
+  color: oklch(1 0 0 / 0.84);
   font-size: 12px;
-  font-weight: 650;
+  font-weight: 600;
 }
 .trans__home::after {
   content: "";
@@ -447,8 +488,8 @@ html.lenis {
   inset: 0;
   z-index: -1;
   background-image:
-    linear-gradient(rgba(255, 255, 255, 0.055) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.055) 1px, transparent 1px);
+    linear-gradient(oklch(1 0 0 / 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, oklch(1 0 0 / 0.05) 1px, transparent 1px);
   background-size: 48px 48px;
   mask-image: linear-gradient(to bottom, transparent, black 16%, black 84%, transparent);
   opacity: 0.55;
@@ -456,7 +497,7 @@ html.lenis {
 
 /* Hero enhancements */
 .hero__eyebrow {
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.14);
+  box-shadow: inset 0 0 0 1px oklch(1 0 0 / 0.14);
   animation: heroFloat 6s ease-in-out infinite;
 }
 .hero__visual-card {
@@ -465,18 +506,18 @@ html.lenis {
   padding: 28px;
   overflow: hidden;
   border-radius: 34px;
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  background: linear-gradient(145deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.055));
+  border: 1px solid oklch(1 0 0 / 0.14);
+  background: linear-gradient(145deg, oklch(1 0 0 / 0.1), oklch(1 0 0 / 0.03));
   backdrop-filter: blur(18px);
-  box-shadow: 0 26px 90px rgba(0, 0, 0, 0.36);
+  box-shadow: 0 26px 90px oklch(0 0 0 / 0.4);
 }
 .hero__visual-card::before {
   content: "";
   position: absolute;
   inset: -42%;
   background:
-    radial-gradient(circle, rgba(129, 199, 132, 0.34), transparent 34%),
-    radial-gradient(circle at 72% 38%, rgba(66, 165, 245, 0.28), transparent 30%);
+    radial-gradient(circle, oklch(0.78 0.15 75 / 0.2), transparent 34%),
+    radial-gradient(circle at 72% 38%, oklch(0.7 0.18 55 / 0.14), transparent 30%);
   animation: heroGlow 10s ease-in-out infinite;
 }
 .hero__visual-card::after {
@@ -484,8 +525,8 @@ html.lenis {
   position: absolute;
   inset: 0;
   background-image:
-    linear-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+    linear-gradient(oklch(1 0 0 / 0.055) 1px, transparent 1px),
+    linear-gradient(90deg, oklch(1 0 0 / 0.055) 1px, transparent 1px);
   background-size: 42px 42px;
   mask-image: linear-gradient(to bottom, transparent, black 14%, black 88%, transparent);
   opacity: 0.72;
@@ -496,7 +537,7 @@ html.lenis {
 }
 .hero__route-path {
   fill: none;
-  stroke: rgba(129, 199, 132, 0.82);
+  stroke: oklch(0.78 0.15 75 / 0.85);
   stroke-width: 3;
   stroke-linecap: round;
   stroke-dasharray: 10 12;
@@ -506,32 +547,33 @@ html.lenis {
   animation: routePulse 2.2s ease-in-out infinite;
 }
 .hero__metric-card {
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid oklch(1 0 0 / 0.14);
+  background: oklch(1 0 0 / 0.08);
   backdrop-filter: blur(14px);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  box-shadow: inset 0 1px 0 oklch(1 0 0 / 0.08);
 }
 .hero__metric-value {
   display: block;
+  font-family: var(--font-mono), monospace;
   font-size: clamp(24px, 3vw, 36px);
-  font-weight: 760;
+  font-weight: 700;
   line-height: 1;
-  letter-spacing: -0.05em;
+  letter-spacing: -0.04em;
 }
 .hero__metric-label {
   display: block;
   margin-top: 7px;
-  color: rgba(255, 255, 255, 0.64);
+  color: oklch(1 0 0 / 0.64);
   font-size: 11px;
-  font-weight: 650;
+  font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.14em;
 }
 .hero__metric-card--dark {
-  background: rgba(7, 21, 15, 0.42);
+  background: oklch(0.08 0.008 255 / 0.42);
 }
 .hero__metric-card--dark .hero__metric-label {
-  color: rgba(255, 255, 255, 0.58);
+  color: oklch(1 0 0 / 0.58);
 }
 
 @keyframes heroFloat {
@@ -562,11 +604,11 @@ html.lenis {
 .tech-item:hover,
 .why-item:hover {
   transform: translateY(-6px);
-  box-shadow: 0 18px 44px rgba(15, 23, 42, 0.12);
+  box-shadow: 0 18px 44px oklch(0 0 0 / 0.35);
 }
 .tech-item:hover,
 .why-item:hover {
-  border-color: rgba(129, 199, 132, 0.24);
+  border-color: oklch(0.78 0.15 75 / 0.3);
 }
 .problem-item:hover img {
   transform: scale(1.08);
@@ -580,7 +622,8 @@ html.lenis {
   width: 100%;
   max-width: 400px;
   height: 100vh;
-  background: white;
+  background: var(--color-surface);
+  border-left: 1px solid var(--color-line);
   z-index: 99;
   padding: 100px 40px 40px;
   transform: translateX(100%);
@@ -588,7 +631,7 @@ html.lenis {
 }
 .header__nav.active {
   transform: translateX(0);
-  box-shadow: -10px 0 30px rgba(0, 0, 0, 0.1);
+  box-shadow: -10px 0 30px oklch(0 0 0 / 0.4);
 }
 
 .nav-overlay {
@@ -597,7 +640,7 @@ html.lenis {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.4);
+  background: oklch(0 0 0 / 0.5);
   z-index: 98;
   opacity: 0;
   visibility: hidden;
@@ -606,4 +649,15 @@ html.lenis {
 .nav-overlay.active {
   opacity: 1;
   visibility: visible;
+}
+
+/* Reduced motion: ambient/decorative animation off, reveals become instant */
+@media (prefers-reduced-motion: reduce) {
+  .marquee-inner,
+  .hero__eyebrow,
+  .hero__visual-card::before,
+  .hero__route-path,
+  .hero__route-dot {
+    animation: none;
+  }
 }

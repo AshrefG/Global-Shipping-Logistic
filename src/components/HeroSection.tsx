@@ -50,26 +50,28 @@ export default function HeroSection() {
 
   return (
     <section ref={sectionRef} className="relative min-h-screen flex items-center overflow-hidden">
-      <div className="absolute inset-0">
-        <div className="absolute inset-0 bg-gradient-to-b from-dark/62 via-dark/28 to-dark/74 z-10" />
-        <video
-          className="w-full h-full object-cover"
-          autoPlay
-          muted
-          loop
-          playsInline
-          poster="https://images.unsplash.com/photo-1566576912321-b58ed61e2673?w=1920"
-        >
-          <source src="https://cdn.coverr.co/videos/coverr-shipping-container-ship-at-sunset-5210/1080p.mp4" type="video/mp4" />
-        </video>
-        <img
-          src="https://images.unsplash.com/photo-1566576912321-b58ed61e2673?w=1920"
-          alt="Hero background"
-          className="absolute inset-0 w-full h-full object-cover"
+      {/* Night-highway backdrop — replaced by the 3D globe scene in Phase 1 */}
+      <div className="absolute inset-0 bg-dark">
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "radial-gradient(ellipse 80% 55% at 70% 110%, oklch(0.78 0.15 75 / 0.16), transparent 60%), radial-gradient(ellipse 60% 45% at 15% -10%, oklch(0.23 0.014 255 / 0.9), transparent 65%)",
+          }}
+        />
+        <div
+          className="absolute inset-0 opacity-[0.35]"
+          style={{
+            backgroundImage:
+              "linear-gradient(oklch(1 0 0 / 0.04) 1px, transparent 1px), linear-gradient(90deg, oklch(1 0 0 / 0.04) 1px, transparent 1px)",
+            backgroundSize: "56px 56px",
+            maskImage:
+              "linear-gradient(to bottom, transparent, black 20%, black 80%, transparent)",
+          }}
         />
       </div>
 
-      <div ref={shipRef} className="absolute right-[-5%] top-[15%] w-[200px] h-[275px] opacity-20 z-10 hidden md:block">
+      <div ref={shipRef} className="absolute right-[-5%] top-[15%] w-[200px] h-[275px] opacity-10 z-10 hidden md:block">
         <svg viewBox="0 0 200 275" fill="none" className="w-full h-full">
           <path d="M100 275L0 150L100 50L200 150L100 275Z" fill="white"/>
           <rect x="85" y="0" width="30" height="80" fill="white"/>
@@ -83,19 +85,17 @@ export default function HeroSection() {
               Global Shipping & Logistics
             </div>
 
-            <h1 ref={titleRef} className="text-5xl md:text-7xl lg:text-8xl font-bold text-white leading-tight mb-6">
-              Smart Maritime{" "}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-lightest to-secondary-lighter">
-                Solutions
-              </span>
+            <h1 ref={titleRef} className="font-display text-5xl md:text-7xl lg:text-8xl font-extrabold text-white leading-[1.02] tracking-tight mb-6">
+              Moving the world{" "}
+              <span className="text-primary">by road.</span>
             </h1>
 
             <div ref={subRef} className="max-w-2xl">
               <p className="text-lg md:text-xl text-white/80 leading-relaxed mb-8">
-                We develop innovative shipping solutions to transport freight{" "}
-                <span className="text-primary-lighter font-semibold">more efficiently</span>,
-                <span className="text-secondary-lighter font-semibold"> with lower emissions</span> and
-                <span className="text-primary-lighter font-semibold"> at lower costs</span> than ever before.
+                FTL, LTL and cross-border corridors — tracked{" "}
+                <span className="text-primary font-semibold">live</span>, delivered{" "}
+                <span className="text-primary font-semibold">door-to-door</span>, with{" "}
+                <span className="text-primary font-semibold">lower emissions</span> per kilometre.
               </p>
 
               <div className="flex flex-wrap gap-4">
@@ -113,16 +113,16 @@ export default function HeroSection() {
 
               <div className="hero__metrics grid grid-cols-3 gap-3 mt-10 max-w-xl">
                 <div className="hero__metric-card hero__metric-card--dark">
-                  <span className="hero__metric-value">70%</span>
-                  <span className="hero__metric-label">Fuel savings</span>
+                  <span className="hero__metric-value">98.6%</span>
+                  <span className="hero__metric-label">On-time</span>
                 </div>
                 <div className="hero__metric-card hero__metric-card--dark">
-                  <span className="hero__metric-value">320</span>
-                  <span className="hero__metric-label">Containers</span>
+                  <span className="hero__metric-value">40+</span>
+                  <span className="hero__metric-label">Corridors</span>
                 </div>
                 <div className="hero__metric-card hero__metric-card--dark">
-                  <span className="hero__metric-value">30%</span>
-                  <span className="hero__metric-label">Faster routes</span>
+                  <span className="hero__metric-value">−35%</span>
+                  <span className="hero__metric-label">CO₂ per km</span>
                 </div>
               </div>
             </div>
@@ -132,7 +132,7 @@ export default function HeroSection() {
             <div className="flex items-center justify-between gap-4">
               <div>
                 <div className="text-white/56 text-xs uppercase tracking-widest mb-1">Route intelligence</div>
-                <div className="text-white font-semibold">Hamburg → New York</div>
+                <div className="text-white font-semibold font-mono">HAM → MIL · E45</div>
               </div>
               <div className="px-3 py-1.5 rounded-full bg-white/10 border border-white/15 text-xs font-semibold text-white/80">
                 Live corridor
@@ -143,30 +143,30 @@ export default function HeroSection() {
               <svg viewBox="0 0 460 260" className="w-full h-auto" fill="none">
                 <defs>
                   <linearGradient id="heroRouteGradient" x1="40" y1="210" x2="420" y2="50" gradientUnits="userSpaceOnUse">
-                    <stop stopColor="#81C784" />
-                    <stop offset="1" stopColor="#42A5F5" />
+                    <stop stopColor="#F2B04B" />
+                    <stop offset="1" stopColor="#E08A2E" />
                   </linearGradient>
                 </defs>
                 <path className="hero__route-path" d="M40 210C110 120 150 188 210 126C282 52 340 116 420 50" />
-                <circle className="hero__route-dot" cx="40" cy="210" r="7" fill="#81C784" />
-                <circle className="hero__route-dot" cx="210" cy="126" r="7" fill="#90CAF9" style={{ animationDelay: "0.45s" }} />
-                <circle className="hero__route-dot" cx="420" cy="50" r="7" fill="#42A5F5" style={{ animationDelay: "0.9s" }} />
+                <circle className="hero__route-dot" cx="40" cy="210" r="7" fill="#F2B04B" />
+                <circle className="hero__route-dot" cx="210" cy="126" r="7" fill="#F5C97E" style={{ animationDelay: "0.45s" }} />
+                <circle className="hero__route-dot" cx="420" cy="50" r="7" fill="#E08A2E" style={{ animationDelay: "0.9s" }} />
                 <path d="M78 224H382" stroke="rgba(255,255,255,.18)" strokeWidth="1" strokeDasharray="5 9" />
               </svg>
             </div>
 
             <div className="grid grid-cols-2 gap-4">
               <div className="hero__metric-card">
-                <span className="hero__metric-value">Low CO₂</span>
-                <span className="hero__metric-label">Wind assisted</span>
+                <span className="hero__metric-value">Live GPS</span>
+                <span className="hero__metric-label">Fleet telematics</span>
               </div>
               <div className="hero__metric-card">
                 <span className="hero__metric-value">AI routed</span>
-                <span className="hero__metric-label">Weather aware</span>
+                <span className="hero__metric-label">Traffic aware</span>
               </div>
               <div className="hero__metric-card">
                 <span className="hero__metric-value">Direct</span>
-                <span className="hero__metric-label">Point-to-point</span>
+                <span className="hero__metric-label">Door-to-door</span>
               </div>
               <div className="hero__metric-card">
                 <span className="hero__metric-value">Traceable</span>
@@ -179,12 +179,12 @@ export default function HeroSection() {
         <div className="mt-16 pt-8 border-t border-white/10">
           <div className="text-xs text-white/50 uppercase tracking-widest mb-4">Trusted by industry leaders</div>
           <div className="flex flex-wrap items-center gap-8 opacity-60">
-            <span className="text-white/70 text-lg font-semibold">Maersk</span>
-            <span className="text-white/70 text-lg font-semibold">MSC</span>
-            <span className="text-white/70 text-lg font-semibold">CMA CGM</span>
-            <span className="text-white/70 text-lg font-semibold">Hapag-Lloyd</span>
-            <span className="text-white/70 text-lg font-semibold">ONE</span>
-            <span className="text-white/70 text-lg font-semibold">Evergreen</span>
+            <span className="text-white/70 text-lg font-semibold">DB Schenker</span>
+            <span className="text-white/70 text-lg font-semibold">DSV</span>
+            <span className="text-white/70 text-lg font-semibold">Kuehne+Nagel</span>
+            <span className="text-white/70 text-lg font-semibold">DHL Freight</span>
+            <span className="text-white/70 text-lg font-semibold">GEODIS</span>
+            <span className="text-white/70 text-lg font-semibold">Rhenus</span>
           </div>
         </div>
       </div>
