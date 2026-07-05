@@ -1,36 +1,66 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Global Shipping & Logistics (GSL)
 
-## Getting Started
+Marketing and product site for **GSL** — a sustainable maritime freight company
+redefining ocean transportation with low-emission vessels, smart routing, and
+data-driven logistics.
 
-First, run the development server:
+## Tech stack
+
+| Concern            | Choice                                    |
+| ------------------ | ----------------------------------------- |
+| Framework          | Next.js 16 (App Router)                   |
+| UI runtime         | React 19                                  |
+| Styling            | Tailwind CSS 4 (`@tailwindcss/postcss`)   |
+| Animation          | GSAP 3 + `@gsap/react`, ScrollTrigger     |
+| Smooth scroll      | Lenis                                     |
+| Utilities          | `clsx`, `tailwind-merge` (`cn` in `src/lib/utils.ts`) |
+| Language           | TypeScript 5 (strict)                     |
+| Fonts              | Geist Sans + Geist Mono (`next/font`)     |
+
+> ⚠️ This project uses a **modified build of Next.js** with breaking changes vs.
+> upstream. Before writing framework code, read the relevant guide in
+> `node_modules/next/dist/docs/`. See [AGENTS.md](./AGENTS.md).
+
+## Getting started
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev      # start dev server → http://localhost:3000
+npm run build    # production build
+npm run start    # serve production build
+npm run lint     # eslint
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Project structure
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+src/
+├── app/
+│   ├── layout.tsx        # root layout, fonts, metadata
+│   ├── page.tsx          # home: loader + section composition
+│   └── globals.css       # global styles / design tokens
+├── components/
+│   ├── ClientLayout.tsx  # Lenis + GSAP setup, Header/Footer/ContactModal shell
+│   ├── Header.tsx        # sticky nav + mobile menu
+│   ├── Footer.tsx
+│   ├── ContactModal.tsx  # ".contact-popup" toggled via .active class
+│   └── *Section.tsx      # Hero, Intro, Problem, Solution, Shift, Tech, WhyUs, Partners, Faq
+└── lib/
+    └── utils.ts          # cn() classname helper
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Architecture notes
 
-## Learn More
+- **Single-page site.** `page.tsx` composes all sections in order. Nav links in
+  `Header.tsx` are in-page anchors (`#about`, `#services`, `#tech`, `#career`,
+  `#news`) — some target sections that do not exist yet (see [ROADMAP.md](./ROADMAP.md)).
+- **Animation.** `ClientLayout` initializes Lenis smooth scroll and wires it to
+  GSAP's ScrollTrigger. Section-level scroll animations use GSAP; respect
+  `prefers-reduced-motion` (the loader in `page.tsx` already does).
+- **Contact modal** is opened imperatively by adding `.active` to `.contact-popup`.
+- **Brand palette:** eco green → ocean blue gradient (`--primary` / `--secondary`).
 
-To learn more about Next.js, take a look at the following resources:
+## Contributing
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Work happens on `dev` (or feature branches off `dev`). See [ROADMAP.md](./ROADMAP.md)
+for planned work and [AGENTS.md](./AGENTS.md) for framework-specific rules.
