@@ -7,7 +7,7 @@ import { useMagnetic } from "@/components/motion/useMagnetic"
 
 const HeroGlobe = dynamic(() => import("@/components/globe/HeroGlobe"), {
   ssr: false,
-  loading: () => <div className="w-full h-[340px]" aria-hidden="true" />,
+  loading: () => <div className="w-full h-[300px]" aria-hidden="true" />,
 })
 
 const TICKER = [
@@ -88,7 +88,7 @@ export default function HeroSection() {
   }, [])
 
   return (
-    <section ref={sectionRef} className="relative min-h-screen flex items-center overflow-hidden">
+    <section ref={sectionRef} className="relative min-h-screen flex items-center pt-32 md:pt-36 pb-16 overflow-hidden">
       {/* Night-highway backdrop — replaced by the 3D globe scene in Phase 1 */}
       <div className="absolute inset-0 bg-dark">
         <div
@@ -120,8 +120,9 @@ export default function HeroSection() {
       <div className="relative z-20 max-w-7xl mx-auto px-6 w-full">
         <div className="grid grid-cols-1 xl:grid-cols-[1.05fr_.95fr] gap-10 xl:gap-16 items-center">
           <div className="max-w-4xl">
-            <div className="hero__eyebrow inline-block px-4 py-2 rounded-full bg-primary-bg/80 backdrop-blur-sm text-primary-dark text-sm font-medium mb-6">
-              Global Shipping & Logistics
+            <div className="hero__eyebrow inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-md text-white/80 text-sm font-medium mb-6">
+              <span className="inline-block w-1.5 h-1.5 rounded-full bg-primary" aria-hidden="true" />
+              Global Shipping &amp; Logistics
             </div>
 
             <h1 ref={titleRef} className="font-display text-5xl md:text-7xl lg:text-8xl font-extrabold text-white leading-[1.02] tracking-tight mb-6">
@@ -150,18 +151,18 @@ export default function HeroSection() {
                 </a>
               </div>
 
-              <div className="hero__metrics grid grid-cols-3 gap-3 mt-10 max-w-xl">
-                <div className="hero__metric-card hero__metric-card--dark">
-                  <span className="hero__metric-value">98.6%</span>
-                  <span className="hero__metric-label">On-time</span>
+              <div className="hero__stat-panel grid grid-cols-3 mt-10 max-w-md">
+                <div className="hero__stat">
+                  <span className="hero__stat-value">98.6%</span>
+                  <span className="hero__stat-label">On-time</span>
                 </div>
-                <div className="hero__metric-card hero__metric-card--dark">
-                  <span className="hero__metric-value">40+</span>
-                  <span className="hero__metric-label">Corridors</span>
+                <div className="hero__stat">
+                  <span className="hero__stat-value">40+</span>
+                  <span className="hero__stat-label">Corridors</span>
                 </div>
-                <div className="hero__metric-card hero__metric-card--dark">
-                  <span className="hero__metric-value">−35%</span>
-                  <span className="hero__metric-label">CO₂ per km</span>
+                <div className="hero__stat">
+                  <span className="hero__stat-value">−35%</span>
+                  <span className="hero__stat-label">CO₂ / km</span>
                 </div>
               </div>
             </div>
@@ -178,8 +179,8 @@ export default function HeroSection() {
               </div>
             </div>
 
-            <div className="my-4 -mx-2">
-              <HeroGlobe className="w-full h-[340px]" />
+            <div className="my-3 -mx-2">
+              <HeroGlobe className="w-full h-[300px]" />
             </div>
 
             <div className="grid grid-cols-2 gap-4">
@@ -203,8 +204,16 @@ export default function HeroSection() {
           </div>
         </div>
 
-        {/* Live corridor ticker — telemetry voice */}
-        <div className="mt-14 -mx-6 border-y border-white/10 bg-white/[0.02]">
+        {/* Live corridor ticker — telemetry voice, soft fade at both edges */}
+        <div
+          className="mt-12 -mx-6 border-y border-white/10 bg-white/[0.02]"
+          style={{
+            maskImage:
+              "linear-gradient(to right, transparent, black 10%, black 90%, transparent)",
+            WebkitMaskImage:
+              "linear-gradient(to right, transparent, black 10%, black 90%, transparent)",
+          }}
+        >
           <div className="marquee py-2.5">
             <div className="marquee-inner items-center gap-10 pr-10" style={{ animationDuration: "46s" }}>
               {[...TICKER, ...TICKER].map((t, i) => (
@@ -216,24 +225,8 @@ export default function HeroSection() {
             </div>
           </div>
         </div>
-
-        <div className="mt-10 pt-2">
-          <div className="text-xs text-white/50 uppercase tracking-widest mb-4">Trusted by industry leaders</div>
-          <div className="flex flex-wrap items-center gap-8 opacity-60">
-            <span className="text-white/70 text-lg font-semibold">DB Schenker</span>
-            <span className="text-white/70 text-lg font-semibold">DSV</span>
-            <span className="text-white/70 text-lg font-semibold">Kuehne+Nagel</span>
-            <span className="text-white/70 text-lg font-semibold">DHL Freight</span>
-            <span className="text-white/70 text-lg font-semibold">GEODIS</span>
-            <span className="text-white/70 text-lg font-semibold">Rhenus</span>
-          </div>
-        </div>
       </div>
 
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2">
-        <span className="text-white/50 text-xs uppercase tracking-widest animate-pulse">Scroll</span>
-        <div className="w-[1px] h-12 bg-gradient-to-b from-white/50 to-transparent" />
-      </div>
     </section>
   )
 }
