@@ -11,6 +11,8 @@ import JourneySection from "@/components/JourneySection"
 import TechSection from "@/components/TechSection"
 import WhyUsSection from "@/components/WhyUsSection"
 import PartnersSection from "@/components/PartnersSection"
+import CareerSection from "@/components/CareerSection"
+import NewsSection from "@/components/NewsSection"
 import FaqSection from "@/components/FaqSection"
 
 const loaderCopy = [
@@ -242,6 +244,8 @@ export default function Home() {
       <TechSection />
       <WhyUsSection />
       <PartnersSection />
+      <CareerSection />
+      <NewsSection />
       <FaqSection />
     </>
   )
