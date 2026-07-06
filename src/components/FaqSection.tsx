@@ -9,32 +9,32 @@ import { useState } from "react"
 
 const faqs = [
   {
-    q: "What lanes do you cover?",
-    a: "Our core network is 40+ corridors across Europe and between Europe and North Africa (including Tunisia via RO-RO). If your lane isn't listed, ask — the network grows where our customers ship.",
+    q: "Where do you operate?",
+    a: "We're headquartered in Dubai — Green Community, Dubai Investment Park (DIP-1), with our cold chain campus in Dubai Industrial City. Transport and distribution cover the whole UAE, cross-border corridors reach across the GCC, and freight forwarding connects you worldwide.",
   },
   {
-    q: "Do you handle temperature-controlled or special cargo?",
-    a: "Yes. Reefer trailers with live temperature telemetry, ADR-certified units for hazardous goods, and open plans for oversized loads. Every special requirement is confirmed in the quote, not discovered at the dock.",
+    q: "What temperatures can your cold chain handle?",
+    a: "Ambient, cool (+15°C to +25°C) and chilled-to-frozen chambers down to −25°C — all under one roof, with continuous SCADA temperature and humidity monitoring, temperature-controlled docks, and BRCGS plus ISO 22000 certification behind every pallet.",
   },
   {
     q: "How does live tracking work?",
-    a: "Every truck streams GPS position, door events and (for reefers) temperature. You get a live map, automatic ETA updates within ±15 minutes, and webhooks or EDI straight into your ERP — no phone calls, no spreadsheets.",
+    a: "Every truck streams GPS position and door events; cold chain shipments stream temperature too. You get a live map, automatic ETA updates, and a customer portal with order entry and BI reporting — or webhooks and EDI straight into your ERP.",
   },
   {
-    q: "What happens at borders?",
-    a: "Documents travel ahead of the truck. e-CMR, T1 transit and customs declarations are filed digitally and pre-cleared before arrival, so the trailer rolls through instead of waiting in a bay.",
+    q: "What happens at ports and borders?",
+    a: "Documents travel ahead of the cargo. Our in-house customs team files import, export and transit declarations before arrival, so containers clear Jebel Ali and trucks cross Ghuweifat without waiting on paperwork.",
   },
   {
-    q: "How do you cut emissions on the road?",
-    a: "Consolidation fills trailers instead of running them empty, AI routing avoids congestion idling, and the fleet renews toward low-emission tractors. Every invoice reports CO₂ per shipment, so the reduction is measurable, not marketing.",
+    q: "What makes GSL different from other 3PLs?",
+    a: "We're part of Al Shirawi Group with freight-forwarding roots since 1975, we own our warehouses and fleet rather than brokering yours, and we hold five quality certifications — ISO 9001, 14001, 22000, 45001 and BRCGS — audited externally every year.",
   },
   {
     q: "I ship a few pallets a week — am I too small?",
-    a: "No. That's exactly what LTL is for: you pay for pallet slots, we fill the rest of the trailer. You get the same tracking, the same ETAs and the same single point of contact as an FTL customer.",
+    a: "No. Shared warehousing and consolidated distribution exist exactly for that: you pay for the pallet positions and drops you use, with the same tracking, portal and single point of contact as our largest accounts.",
   },
   {
-    q: "I'm a carrier. Can I join the network?",
-    a: "We partner with owner-operators and mid-size fleets on selected corridors. You get steady volume, fast payment terms and our telematics kit — write to us and tell us where your trucks run.",
+    q: "Can you handle in-store work too?",
+    a: "Yes — stocktaking and merchandising are part of the service: cyclical counts, shelf-ready preparation and in-store teams that keep your inventory truth in sync with your system, from our warehouse to your shop floor.",
   },
 ]
 
@@ -53,10 +53,10 @@ export default function FaqSection() {
           <div className="lg:col-span-4 lg:col-start-9 lg:text-right">
             <p className="text-gray-600 text-sm mb-2">Can&apos;t find what you&apos;re looking for?</p>
             <a
-              href="mailto:info@globalshipping-logistics.com"
+              href="mailto:info@gsldubai.com"
               className="text-primary font-medium hover:text-primary-dark transition-colors no-underline"
             >
-              info@globalshipping-logistics.com
+              info@gsldubai.com
             </a>
           </div>
         </div>

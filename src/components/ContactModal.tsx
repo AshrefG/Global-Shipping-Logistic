@@ -164,8 +164,8 @@ export default function ContactModal() {
 
             <div className="mb-2">
               <div className="text-sm text-gray-500 mb-1">Or just wanna say hi?</div>
-              <a href="mailto:info@globalshipping-logistics.com" className="text-lg font-medium text-primary hover:text-primary-dark transition-colors no-underline">
-                info@globalshipping-logistics.com
+              <a href="mailto:info@gsldubai.com" className="text-lg font-medium text-primary hover:text-primary-dark transition-colors no-underline">
+                info@gsldubai.com
               </a>
             </div>
 

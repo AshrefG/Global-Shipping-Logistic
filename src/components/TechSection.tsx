@@ -106,7 +106,7 @@ export default function TechSection() {
               <div className="flex items-center justify-between mb-6">
                 <div>
                   <div className="text-white/45 text-xs uppercase tracking-widest mb-1">Control tower</div>
-                  <div className="font-mono font-semibold">UNIT GSL-2471 · HAM → MIL</div>
+                  <div className="font-mono font-semibold">UNIT GSL-2471 · DXB → RUH</div>
                 </div>
                 <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs font-semibold text-white/80">
                   <span className="inline-block w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
@@ -136,8 +136,8 @@ export default function TechSection() {
                   <circle cx="600" cy="46" r="7" fill="#E08A2E" />
                   {/* traveling unit */}
                   <circle className="tech-unit-dot" cx="48" cy="282" r="9" fill="#F2B04B" stroke="oklch(0.1 0.01 255)" strokeWidth="3" />
-                  <text x="60" y="300" className="font-mono" fill="oklch(1 0 0 / 0.45)" fontSize="12" fontFamily="var(--font-geist-mono)">HAM</text>
-                  <text x="562" y="30" className="font-mono" fill="oklch(1 0 0 / 0.45)" fontSize="12" fontFamily="var(--font-geist-mono)">MIL</text>
+                  <text x="60" y="300" className="font-mono" fill="oklch(1 0 0 / 0.45)" fontSize="12" fontFamily="var(--font-geist-mono)">DXB</text>
+                  <text x="562" y="30" className="font-mono" fill="oklch(1 0 0 / 0.45)" fontSize="12" fontFamily="var(--font-geist-mono)">RUH</text>
                 </svg>
               </div>
 

@@ -6,15 +6,15 @@ brand
 
 ## Users
 
-- **Freight decision-makers** (supply-chain managers, procurement leads at manufacturers/retailers) evaluating a road-freight partner for European/cross-border lanes. They arrive skeptical — logistics sites are usually cluttered and interchangeable — and decide in seconds whether GSL feels like a serious, modern operator.
-- **Shippers with recurring volume** comparing GSL against legacy forwarders; they care about reliability, tracking/visibility technology, and emissions reporting.
-- **Talent** (drivers, ops, engineers) landing on Career.
+- **Freight decision-makers** (supply-chain managers, procurement leads at manufacturers/retailers/F&B) evaluating a 3PL partner for UAE/GCC lanes and cold chain storage. They arrive skeptical — logistics sites are usually cluttered and interchangeable — and decide in seconds whether GSL feels like a serious, modern operator.
+- **Shippers with recurring volume** comparing GSL against legacy forwarders; they care about reliability, tracking/visibility technology, temperature integrity and certified quality.
+- **Talent** (drivers, warehouse ops, engineers) landing on Career.
 
-Job to be done: understand what GSL moves, where, and why it's more reliable and lower-emission than the incumbent — then get in touch.
+Job to be done: understand what GSL moves and stores, where, and why it's more reliable than the incumbent — then get in touch.
 
 ## Product Purpose
 
-Marketing site for **Global Shipping & Logistics (GSL)** — a **road-freight-first** logistics company. Trucking/land transport is the hero story (FTL/LTL, cross-border corridors, last-mile); ocean and other modes appear as complementary services in an integrated door-to-door network. Success = qualified contact-form leads and the immediate impression of a premium, technology-driven carrier.
+Marketing site for **Global Shipping & Logistics (L.L.C)** — a Dubai **3PL, part of Al Shirawi Group**, with freight-forwarding roots since 1975. Road transport is the visual hero story; the offering spans international freight, customs clearance, port haulage, **cold chain warehousing (ambient to −25°C)**, distribution, value-added services and stocktaking/merchandising. Trust anchors: LRQA-audited, UKAS-accredited ISO 9001/14001/22000/45001 + BRCGS ("the region's only 3PL certified across all five"). Tagline: **"Driven by You."** Success = qualified contact-form leads and the immediate impression of a premium, technology-driven operator.
 
 ## Brand Personality
 

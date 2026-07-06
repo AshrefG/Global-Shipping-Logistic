@@ -14,21 +14,22 @@ import WhyUsSection from "@/components/WhyUsSection"
 import PartnersSection from "@/components/PartnersSection"
 import CareerSection from "@/components/CareerSection"
 import NewsSection from "@/components/NewsSection"
+import CertBand from "@/components/CertBand"
 import FaqSection from "@/components/FaqSection"
 
 const loaderCopy = [
-  "Low Emission Road Freight",
-  "Cross-Border Trucking Network",
-  "Door-to-Door. Data-Driven.",
+  "Driven by You",
+  "Freight · Customs · Cold Chain",
+  "Part of Al Shirawi Group",
 ]
 
+// The five quality marks (LRQA audited, UKAS accredited)
 const backers = [
-  "Bayern Kapital",
-  "SOSV",
-  "Lowercarbon",
-  "FTTF",
-  "Future Planet",
-  "Farvatn",
+  "ISO 9001",
+  "ISO 14001",
+  "ISO 22000",
+  "ISO 45001",
+  "BRCGS",
 ]
 
 export default function Home() {
@@ -213,7 +214,7 @@ export default function Home() {
             <div>
               <h1 className="trans__home-title">{loaderCopy[0]}</h1>
               <div className="trans__backers">
-                <div className="trans__backers-label">Backed by top-tier investors</div>
+                <div className="trans__backers-label">LRQA audited · UKAS accredited</div>
                 <div className="trans__backers-inner">
                   {backers.map((backer) => (
                     <span key={backer}>{backer}</span>
@@ -233,6 +234,7 @@ export default function Home() {
       <JourneySection />
       <TechSection />
       <WhyUsSection />
+      <CertBand />
       <PartnersSection />
       <CareerSection />
       <NewsSection />

@@ -12,30 +12,30 @@ const AMBER = "#efa831"
 const AMBER_HOT = "#e0812e"
 const DOT_GRAY = "#4a5060"
 
-/** Freight network hubs (road-first corridors, Europe ↔ North Africa) */
+/** Freight network hubs (road-first GCC corridors, Dubai HQ) */
 const HUBS: Record<string, [lat: number, lng: number]> = {
-  HAM: [53.55, 9.99],   // Hamburg — HQ
-  ROT: [51.92, 4.48],   // Rotterdam
-  MIL: [45.46, 9.19],   // Milan
-  MAD: [40.42, -3.7],   // Madrid
-  WAW: [52.23, 21.01],  // Warsaw
-  IST: [41.01, 28.98],  // Istanbul
-  TUN: [36.81, 10.18],  // Tunis
+  DXB: [25.2, 55.27],   // Dubai — HQ (DIP-1 / Dubai Industrial City)
+  AUH: [24.45, 54.38],  // Abu Dhabi
+  RUH: [24.71, 46.68],  // Riyadh
+  JED: [21.49, 39.19],  // Jeddah
+  DOH: [25.29, 51.53],  // Doha
+  KWI: [29.38, 47.98],  // Kuwait City
+  MCT: [23.59, 58.41],  // Muscat
 }
 
 const CORRIDORS: Array<[keyof typeof HUBS, keyof typeof HUBS]> = [
-  ["HAM", "MIL"],
-  ["HAM", "WAW"],
-  ["ROT", "MAD"],
-  ["MIL", "TUN"],
-  ["MIL", "IST"],
-  ["HAM", "ROT"],
+  ["DXB", "RUH"],
+  ["DXB", "DOH"],
+  ["DXB", "KWI"],
+  ["DXB", "MCT"],
+  ["RUH", "JED"],
+  ["DXB", "AUH"],
 ]
 
 const R = 1
-/** Face the Europe↔North-Africa cluster (≈lat 46, lng 10) toward the camera */
-const BASE_YAW = -1.7
-const BASE_TILT = 0.85
+/** Face the GCC cluster (≈lat 25°, lng 52°) toward the camera */
+const BASE_YAW = -2.43
+const BASE_TILT = 0.5
 
 function latLngToVec3(lat: number, lng: number, radius = R): THREE.Vector3 {
   const phi = ((90 - lat) * Math.PI) / 180
@@ -165,7 +165,7 @@ function Scene() {
   })
 
   return (
-    // Start rotated so the Europe↔North-Africa corridor cluster faces camera
+    // Start rotated so the GCC corridor cluster faces the camera
     <group ref={group} rotation={[BASE_TILT, BASE_YAW, 0]}>
       {/* body */}
       <mesh>

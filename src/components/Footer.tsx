@@ -45,24 +45,30 @@ export default function Footer() {
           {/* Contact */}
           <div className="lg:col-span-4 lg:col-start-9">
             <div className="mb-6">
-              <div className="text-gray-400 text-xs uppercase tracking-wider mb-2">Main Office</div>
+              <div className="text-gray-400 text-xs uppercase tracking-wider mb-2">Head Office</div>
               <p className="text-sm text-gray-700">
-                Global Shipping & Logistics GmbH<br />
-                Am Sandtorkai 50<br />
-                20457 Hamburg<br />
-                Germany
+                Global Shipping &amp; Logistics (L.L.C)<br />
+                Green Community, Dubai Investment Park (DIP-1)<br />
+                Dubai, United Arab Emirates
+              </p>
+            </div>
+            <div className="mb-6">
+              <div className="text-gray-400 text-xs uppercase tracking-wider mb-2">Cold Chain Campus</div>
+              <p className="text-sm text-gray-700">
+                Dubai Industrial City<br />
+                Dubai, United Arab Emirates
               </p>
             </div>
             <div className="mb-4">
               <div className="text-gray-400 text-xs uppercase tracking-wider mb-1">Email</div>
-              <a href="mailto:info@globalshipping-logistics.com" className="text-lg text-white hover:text-primary transition-colors no-underline">
-                info@globalshipping-logistics.com
+              <a href="mailto:info@gsldubai.com" className="text-lg text-white hover:text-primary transition-colors no-underline">
+                info@gsldubai.com
               </a>
             </div>
             <div>
               <div className="text-gray-400 text-xs uppercase tracking-wider mb-1">Phone</div>
-              <a href="tel:+494052036527" className="text-lg text-white hover:text-primary transition-colors no-underline">
-                +49 40 52036527
+              <a href="tel:+97148851566" className="text-lg text-white hover:text-primary transition-colors no-underline">
+                +971 4 885 1566
               </a>
             </div>
           </div>
@@ -73,24 +79,24 @@ export default function Footer() {
           <div id="legal" className="scroll-mt-24">
             <div className="text-gray-400 text-xs uppercase tracking-wider mb-2">Legal notice</div>
             <p className="text-xs text-gray-500 leading-relaxed max-w-md">
-              Global Shipping &amp; Logistics GmbH · Am Sandtorkai 50, 20457 Hamburg, Germany ·
-              Managing directors: as registered · Commercial register: Amtsgericht Hamburg ·
-              VAT ID available on request.
+              Global Shipping &amp; Logistics (L.L.C) · Part of Al Shirawi Group ·
+              Green Community, Dubai Investment Park (DIP-1), Dubai, UAE ·
+              Licensed in the Emirate of Dubai · TRN available on request.
             </p>
           </div>
           <div id="privacy" className="scroll-mt-24">
             <div className="text-gray-400 text-xs uppercase tracking-wider mb-2">Privacy</div>
             <p className="text-xs text-gray-500 leading-relaxed max-w-md">
-              We process contact-form data solely to answer your request (GDPR Art. 6(1)(b)) and
-              never sell it. Tracking data from shipments stays between you and your consignee.
-              Questions: <a href="mailto:info@globalshipping-logistics.com" className="text-gray-400 hover:text-white transition-colors">info@globalshipping-logistics.com</a>.
+              We process contact-form data solely to answer your request and never sell it.
+              Tracking data from shipments stays between you and your consignee.
+              Questions: <a href="mailto:info@gsldubai.com" className="text-gray-400 hover:text-white transition-colors">info@gsldubai.com</a>.
             </p>
           </div>
         </div>
 
         {/* Bottom */}
         <div className="mt-10 pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-4">
-          <div className="text-gray-500 text-xs">© 2025, Global Shipping & Logistics. All Rights Reserved.</div>
+          <div className="text-gray-500 text-xs">© 2026, Global Shipping & Logistics (L.L.C) · Part of Al Shirawi Group. All Rights Reserved.</div>
           <div className="flex items-center gap-6">
             <a href="#legal" className="text-gray-400 text-xs hover:text-white transition-colors no-underline">Legal notice</a>
             <a href="#privacy" className="text-gray-400 text-xs hover:text-white transition-colors no-underline">Privacy policy</a>
