@@ -6,7 +6,7 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-6 py-16">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
           {/* Newsletter */}
-          <div id="news" className="lg:col-span-4 scroll-mt-24">
+          <div className="lg:col-span-4">
             <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center mb-4">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5">
                 <path d="M21 5.5L12 13.5L3 5.5" strokeLinecap="round" strokeLinejoin="round"/>
@@ -35,10 +35,10 @@ export default function Footer() {
           </div>
 
           {/* Links */}
-          <div id="career" className="lg:col-span-3 lg:col-start-7 scroll-mt-24">
+          <div className="lg:col-span-3 lg:col-start-7">
             <div className="flex flex-col gap-4">
               <a href="#" className="text-lg text-gray-700 hover:text-white transition-colors no-underline">Home.</a>
-              <a href="#about" className="text-lg text-gray-700 hover:text-white transition-colors no-underline">About. <span className="text-primary text-xs ml-1">We&apos;re hiring</span></a>
+              <a href="#career" className="text-lg text-gray-700 hover:text-white transition-colors no-underline">Career. <span className="text-primary text-xs ml-1">We&apos;re hiring</span></a>
               <a href="#tech" className="text-lg text-gray-700 hover:text-white transition-colors no-underline">Technology.</a>
               <a href="#news" className="text-lg text-gray-700 hover:text-white transition-colors no-underline">News & Media.</a>
               <a href="#contact" className="text-lg text-gray-700 hover:text-white transition-colors no-underline" data-popup="contact">Get in touch.</a>

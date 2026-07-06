@@ -13,6 +13,8 @@ type CountUpProps = {
   decimals?: number
   duration?: number
   className?: string
+  /** Thousands separators (off for years, route codes, ...) */
+  grouping?: boolean
 }
 
 /**
@@ -26,12 +28,14 @@ export default function CountUp({
   decimals = 0,
   duration = 1.6,
   className,
+  grouping = true,
 }: CountUpProps) {
   const ref = useRef<HTMLSpanElement>(null)
   const format = (v: number) =>
     v.toLocaleString("en-US", {
       minimumFractionDigits: decimals,
       maximumFractionDigits: decimals,
+      useGrouping: grouping,
     })
 
   useGSAP(

@@ -1,53 +1,59 @@
 "use client"
 
 import { useEffect, useRef } from "react"
-import { gsap } from "gsap"
-import { ScrollTrigger } from "gsap/ScrollTrigger"
+import { gsap, prefersReducedMotion } from "@/lib/gsap"
+import CountUp from "@/components/motion/CountUp"
 
-const problems = [
+/*
+  Problem — the pain of legacy road freight (Phase 3).
+  Typographic pain rows with hairline dividers + a dark stat band in the
+  mono telemetry voice. No image grid, no identical cards.
+*/
+
+const PAINS = [
   {
-    img: "https://images.unsplash.com/photo-1580674285054-bed31e145f59?w=600",
-    title: "Not reliable due to lack of resilience",
-    desc: "One single incident such as a port strike or canal blockage shuts down major shipping routes, causing billions in damages within days.",
+    title: "Black-hole tracking",
+    desc: "“Where is my truck?” still takes three phone calls and a spreadsheet. Most forwarders go dark between pickup and delivery.",
   },
   {
-    img: "https://images.unsplash.com/photo-1611273426858-450d8e3c9fce?w=600",
-    title: "Not sustainable",
-    desc: "Ships run on heavy fuel oil, making global shipping responsible for nearly 1 Gigatonne of CO₂ emissions per year — more than all of Germany.",
+    title: "Fragmented handoffs",
+    desc: "Broker to carrier to subcontractor — every handoff adds cost, delay and someone else to blame when cargo is late.",
   },
   {
-    img: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=600",
-    title: "Only for standard routes",
-    desc: "Ultra-large vessels are cost-efficient on major routes, but 95% of ports lack the infrastructure for them. Smaller routes face twice the cost.",
+    title: "Empty kilometres",
+    desc: "Trucks run partly or fully empty on return legs. You pay for the waste, and so does the climate.",
   },
   {
-    img: "https://images.unsplash.com/photo-1580674285054-bed31e145f59?w=600",
-    title: "Not customer-oriented",
-    desc: "Serving thousands of customers with single vessels makes individualized routing and just-in-time delivery nearly impossible.",
+    title: "Borders on paper",
+    desc: "Customs still runs on printed CMRs and waiting bays. A single missing stamp strands a trailer for a day.",
   },
   {
-    img: "https://images.unsplash.com/photo-1506521781265-d8422e82f27a?w=600",
-    title: "Slow",
-    desc: "98% of ports are not directly connected. Time-intensive stops and transshipments add unnecessary transportation time.",
+    title: "Rigid schedules",
+    desc: "Fixed departures built for the carrier's convenience, not your production line. Just-in-time becomes just-hope.",
   },
 ]
 
+const STATS = [
+  { value: 25, suffix: "%", label: "of EU truck-km run empty" },
+  { value: 43, suffix: "h", label: "avg. dwell lost at borders / mo" },
+  { value: 3, suffix: "+", label: "middlemen on a typical load" },
+  { value: 70, suffix: "%", label: "of shippers lack live ETA" },
+]
+
 export default function ProblemSection() {
-  const sectionRef = useRef<HTMLDivElement>(null)
+  const sectionRef = useRef<HTMLElement>(null)
 
   useEffect(() => {
+    if (prefersReducedMotion()) return
     const ctx = gsap.context(() => {
-      if (!sectionRef.current) return
-      gsap.from(sectionRef.current.querySelectorAll(".problem-item"), {
-        y: 60,
-        opacity: 0,
-        duration: 0.8,
-        stagger: 0.15,
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top 75%",
-          toggleActions: "play none none reverse",
-        },
+      gsap.utils.toArray<HTMLElement>(".problem-row", sectionRef.current).forEach((row) => {
+        gsap.from(row, {
+          y: 36,
+          opacity: 0,
+          duration: 0.7,
+          ease: "power3.out",
+          scrollTrigger: { trigger: row, start: "top 85%" },
+        })
       })
     }, sectionRef)
     return () => ctx.revert()
@@ -56,31 +62,39 @@ export default function ProblemSection() {
   return (
     <section ref={sectionRef} className="py-24 md:py-32 bg-gray-50">
       <div className="max-w-7xl mx-auto px-6">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 mb-16">
-          <div className="lg:col-span-3">
-            <div className="text-sm font-medium text-primary uppercase tracking-widest">Problem</div>
-          </div>
-          <div className="lg:col-span-9">
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-semibold text-gray-900 leading-tight">
-              Ocean shipping is the backbone of global trade, but...
-            </h2>
-          </div>
+        <h2 className="font-display text-3xl md:text-5xl font-bold text-gray-900 leading-tight tracking-tight max-w-3xl mb-6">
+          Road freight moves 70% of Europe&apos;s goods.
+          <span className="text-gray-400"> It still runs like 1995.</span>
+        </h2>
+
+        {/* Stat band — the cost of the status quo */}
+        <div className="mt-14 mb-20 rounded-2xl bg-dark border border-line grid grid-cols-2 lg:grid-cols-4">
+          {STATS.map((s, i) => (
+            <div key={i} className={`px-7 py-8 ${i > 0 ? "border-l border-white/5" : ""}`}>
+              <div className="font-mono text-3xl md:text-4xl font-bold text-primary">
+                <CountUp value={s.value} suffix={s.suffix} />
+              </div>
+              <div className="mt-2 text-xs uppercase tracking-[0.12em] text-white/45 leading-relaxed">{s.label}</div>
+            </div>
+          ))}
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {problems.map((p, i) => (
-            <div key={i} className={`problem-item group cursor-pointer ${i === 0 ? "md:col-span-2 lg:col-span-2" : ""} ${i === 4 ? "md:col-span-2 lg:col-span-1" : ""}`}>
-              <div className={`relative rounded-2xl overflow-hidden mb-4 ${i === 0 ? "aspect-[16/9]" : ""} ${i === 1 || i === 2 ? "aspect-square" : ""} ${i === 3 ? "aspect-[3/4]" : ""} ${i === 4 ? "aspect-[4/3]" : ""}`}>
-                <img
-                  src={p.img}
-                  alt={p.title}
-                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                  loading="lazy"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+        {/* Pain rows */}
+        <div>
+          {PAINS.map((p, i) => (
+            <div
+              key={i}
+              className="problem-row group grid grid-cols-1 md:grid-cols-12 gap-3 md:gap-8 py-8 border-t border-line last:border-b hover:bg-white/[0.015] transition-colors"
+            >
+              <h3 className="md:col-span-4 text-xl md:text-2xl font-semibold text-gray-900 group-hover:text-primary transition-colors">
+                {p.title}
+              </h3>
+              <p className="md:col-span-6 text-gray-600 leading-relaxed max-w-xl">{p.desc}</p>
+              <div className="hidden md:flex md:col-span-2 items-start justify-end">
+                <span className="font-mono text-xs text-gray-400 group-hover:text-primary transition-colors">
+                  FAULT {String(i + 1).padStart(2, "0")}
+                </span>
               </div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">{p.title}</h3>
-              <p className="text-gray-600 text-sm leading-relaxed">{p.desc}</p>
             </div>
           ))}
         </div>

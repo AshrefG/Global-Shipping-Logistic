@@ -63,24 +63,25 @@ The "trip along the corridor" — complex ScrollTrigger work.
 - ⚪ **Depth pass** — layered parallax (≤0.15 speed delta), film grain on
   cinematic scenes, velocity-reactive skew on marquees.
 
-## Phase 3 — Section rebuilds (branch per section)
+## Phase 3 — Section rebuilds (branch: `feat/section-rebuilds`)
 
 Each section reimagined in the new system — varied rhythm, no uniform card grids.
 
-- ⚪ **Intro/About** (`#about`) — manifesto: large text, per-line scrub reveal.
-- ⚪ **Problem** — the old-freight pain, dark stat band with mono CountUps.
-- ⚪ **Services** (`#services`) — sticky-stacked panels: FTL, LTL, cross-border,
-  last-mile, warehousing (+ ocean as complementary mode).
-- ⚪ **Tech** — telematics: live-tracking map with animated dashed routes,
-  mono data readouts.
-- ⚪ **Why us** — fleet numbers, emission savings; counters, not cards.
-- ⚪ **Partners** — velocity-skew marquee, monochrome logos, amber on hover.
-- ⚪ **FAQ** — refined accordion, hairline dividers, smooth height.
-- ⚪ **Career** (`#career`) — NEW real section: open roles + CTA (replaces
-  interim footer target).
-- ⚪ **News & Media** (`#news`) — NEW real section: press/blog teasers
-  (replaces interim footer target).
-- ⚪ **Footer** — premium CTA band in new system.
+- 🟢 **Intro/About** (`#about`) — typographic manifesto with per-line TextReveal
+  + mono stat row (founded / corridors / km / on-time).
+- 🟢 **Problem** — road-freight pains as hairline rows + dark stat band with
+  mono CountUps ("runs like 1995").
+- 🟢 **Services** (`#services`) — CSS sticky-stacked panels: FTL, LTL,
+  cross-border, last-mile, warehousing, ocean/rail — spec chips per service.
+- 🟢 **Tech** — control-tower panel: animated dashed corridors, traveling unit
+  dot, mono readouts (speed/ETA/reefer/CO₂) + capability rows.
+- 🟢 **Why us** — counters lead (fleet/hubs/km/CO₂), reason rows follow.
+- 🟢 **Partners** — velocity-skew marquee (Phase 2).
+- 🟢 **FAQ** — road-freight Q&A, accessible button accordion.
+- 🟢 **Career** (`#career`) — real section: open roles as mailto rows.
+- 🟢 **News & Media** (`#news`) — real section: editorial teaser rows
+  (links stubbed until the blog/CMS lands).
+- ⚪ **Footer** — premium CTA band refresh (fold into Phase 4 polish).
 
 ## Phase 4 — Polish & production (branch: `feat/polish`)
 
