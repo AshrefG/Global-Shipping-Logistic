@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react"
 import { gsap } from "gsap"
+import Logo from "@/components/Logo"
 import HeroSection from "@/components/HeroSection"
 import IntroSection from "@/components/IntroSection"
 import ProblemSection from "@/components/ProblemSection"
@@ -188,18 +189,7 @@ export default function Home() {
     <>
       <div ref={loadingRef} className="trans__wrapper" role="status" aria-label="Loading Global Shipping and Logistics">
         <div className="trans__logo" aria-hidden="true">
-          <svg viewBox="0 0 64 64" fill="none">
-            <rect x="8" y="8" width="48" height="48" rx="18" fill="url(#loaderLogoGradient)" />
-            <path d="M18 39.5L32 19.5L46 39.5H18Z" fill="white" />
-            <path d="M23 39.5H41" stroke="white" strokeWidth="3" strokeLinecap="round" />
-            <path d="M16 45H48" stroke="white" strokeWidth="3" strokeLinecap="round" opacity="0.75" />
-            <defs>
-              <linearGradient id="loaderLogoGradient" x1="8" y1="8" x2="56" y2="56" gradientUnits="userSpaceOnUse">
-                <stop stopColor="#F2B04B" />
-                <stop offset="1" stopColor="#E08A2E" />
-              </linearGradient>
-            </defs>
-          </svg>
+          <Logo height={52} />
         </div>
 
         <div className="trans__inner" aria-hidden="true">

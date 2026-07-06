@@ -1,5 +1,7 @@
 "use client"
 
+import Logo from "@/components/Logo"
+
 export default function Footer() {
   return (
     <footer className="bg-dark text-white">
@@ -7,13 +9,8 @@ export default function Footer() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
           {/* Newsletter */}
           <div className="lg:col-span-4">
-            <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center mb-4">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5">
-                <path d="M21 5.5L12 13.5L3 5.5" strokeLinecap="round" strokeLinejoin="round"/>
-                <path d="M21 3H3c-2 0-3 1-3 3v12c0 2 1 3 3 3h18c2 0 3-1 3-3V6c0-2-1-3-3-3Z" strokeLinecap="round" strokeLinejoin="round"/>
-                <path d="M8 13.5L3 18" strokeLinecap="round" strokeLinejoin="round"/>
-                <path d="M16 13.5l5 4.5" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
+            <div className="mb-5">
+              <Logo height={48} />
             </div>
             <h3 className="text-2xl font-semibold mb-3">Subscribe to Newsletters</h3>
             <p className="text-gray-400 text-sm mb-6">Want to stay up to date? Sign up for our monthly update.</p>

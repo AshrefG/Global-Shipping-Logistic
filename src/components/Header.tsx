@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { cn } from "@/lib/utils"
+import Logo from "@/components/Logo"
 
 const navLinks = [
   { label: "Home.", href: "#" },
@@ -35,15 +36,8 @@ export default function Header() {
     <>
       <header className={cn("header", scrolled && "scrolled")}>
         <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
-          <a href="#" className="flex items-center gap-2 no-underline">
-            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="white">
-                <path d="M3 3h18v18H3V3zm2 2v14h14V5H5zm3 3h8v2H8V8zm0 4h8v2H8v-2zm0 4h5v2H8v-2z"/>
-              </svg>
-            </div>
-            <span className="font-bold text-lg hidden sm:block text-ink">
-              GSL
-            </span>
+          <a href="#" className="flex items-center no-underline" aria-label="Global Shipping & Logistics — home">
+            <Logo height={42} />
           </a>
 
           <nav className="hidden lg:flex items-center gap-8">
