@@ -34,7 +34,7 @@ const PAINS = [
 ]
 
 const STATS = [
-  { value: 25, suffix: "%", label: "of EU truck-km run empty" },
+  { value: 25, suffix: "%", label: "of truck-km run empty" },
   { value: 43, suffix: "h", label: "avg. dwell lost at borders / mo" },
   { value: 3, suffix: "+", label: "middlemen on a typical load" },
   { value: 70, suffix: "%", label: "of shippers lack live ETA" },
@@ -63,8 +63,8 @@ export default function ProblemSection() {
     <section ref={sectionRef} className="py-24 md:py-32 bg-gray-50">
       <div className="max-w-7xl mx-auto px-6">
         <h2 className="font-display text-3xl md:text-5xl font-bold text-gray-900 leading-tight tracking-tight max-w-3xl mb-6">
-          Road freight moves 70% of Europe&apos;s goods.
-          <span className="text-gray-400"> It still runs like 1995.</span>
+          Freight keeps the Gulf moving.
+          <span className="text-gray-400"> Most of it still runs like 1995.</span>
         </h2>
 
         {/* Stat band — the cost of the status quo */}

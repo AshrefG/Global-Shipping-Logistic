@@ -14,8 +14,8 @@ import { gsap } from "@/lib/gsap"
 
 const STOPS = [
   { id: "01", name: "Pickup", desc: "Loaded at your dock — sealed, weighed, photographed.", code: "GATE-OUT 06:12" },
-  { id: "02", name: "Linehaul", desc: "FTL corridor, AI-routed around traffic and weather.", code: "E45 · 87 KM/H" },
-  { id: "03", name: "Border", desc: "Customs pre-cleared before the truck arrives.", code: "T1 · CLEARED" },
+  { id: "02", name: "Linehaul", desc: "FTL corridor, AI-routed around traffic and weather.", code: "E11 · 87 KM/H" },
+  { id: "03", name: "Border", desc: "Customs pre-cleared before the truck arrives.", code: "GHUWEIFAT · CLEARED" },
   { id: "04", name: "Hub", desc: "Cross-docked in minutes, never overnight.", code: "DWELL 00:23" },
   { id: "05", name: "Delivery", desc: "Door-to-door, e-signed, emissions reported.", code: "POD 17:48" },
 ]

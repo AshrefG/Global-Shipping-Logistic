@@ -11,12 +11,12 @@ const HeroGlobe = dynamic(() => import("@/components/globe/HeroGlobe"), {
 })
 
 const TICKER = [
-  "HAM→MIL · E45 · ON TIME",
-  "ROT→MAD · A62 · 12:40 CET",
-  "MIL→TUN · RO-RO · LOADING",
-  "HAM→WAW · A2 · ON TIME",
-  "MIL→IST · O-3 · IN TRANSIT",
-  "HAM→ROT · A1 · DELIVERED",
+  "DXB→RUH · E11 · ON TIME",
+  "JEA→DOH · GATE-OUT 06:12",
+  "CCW · −25°C · IN SPEC",
+  "DXB→KWI · E11 · IN TRANSIT",
+  "DXB→MCT · E44 · ON TIME",
+  "AUH→JED · POD 17:48",
 ]
 
 export default function HeroSection() {
@@ -122,7 +122,7 @@ export default function HeroSection() {
           <div className="max-w-4xl">
             <div className="hero__eyebrow inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-md text-white/80 text-sm font-medium mb-6">
               <span className="inline-block w-1.5 h-1.5 rounded-full bg-primary" aria-hidden="true" />
-              Global Shipping &amp; Logistics
+              Part of Al Shirawi Group · Dubai
             </div>
 
             <h1 ref={titleRef} className="font-display text-5xl md:text-7xl lg:text-8xl font-extrabold text-white leading-[1.02] tracking-tight mb-6">
@@ -132,10 +132,10 @@ export default function HeroSection() {
 
             <div ref={subRef} className="max-w-2xl">
               <p className="text-lg md:text-xl text-white/80 leading-relaxed mb-8">
-                FTL, LTL and cross-border corridors — tracked{" "}
-                <span className="text-primary font-semibold">live</span>, delivered{" "}
-                <span className="text-primary font-semibold">door-to-door</span>, with{" "}
-                <span className="text-primary font-semibold">lower emissions</span> per kilometre.
+                Freight, customs, transport and{" "}
+                <span className="text-primary font-semibold">cold chain</span> across the GCC —
+                tracked <span className="text-primary font-semibold">live</span>, delivered{" "}
+                <span className="text-primary font-semibold">door-to-door</span>.
               </p>
 
               <div className="flex flex-wrap gap-4">
@@ -153,16 +153,16 @@ export default function HeroSection() {
 
               <div className="hero__stat-panel grid grid-cols-3 mt-10 max-w-md">
                 <div className="hero__stat">
-                  <span className="hero__stat-value">98.6%</span>
-                  <span className="hero__stat-label">On-time</span>
+                  <span className="hero__stat-value">1975</span>
+                  <span className="hero__stat-label">Freight roots</span>
                 </div>
                 <div className="hero__stat">
-                  <span className="hero__stat-value">40+</span>
-                  <span className="hero__stat-label">Corridors</span>
+                  <span className="hero__stat-value">5×</span>
+                  <span className="hero__stat-label">Certified · LRQA</span>
                 </div>
                 <div className="hero__stat">
-                  <span className="hero__stat-value">−35%</span>
-                  <span className="hero__stat-label">CO₂ / km</span>
+                  <span className="hero__stat-value">−25°C</span>
+                  <span className="hero__stat-label">Cold chain</span>
                 </div>
               </div>
             </div>
@@ -172,7 +172,7 @@ export default function HeroSection() {
             <div className="flex items-center justify-between gap-4">
               <div>
                 <div className="text-white/56 text-xs uppercase tracking-widest mb-1">Route intelligence</div>
-                <div className="text-white font-semibold font-mono">HAM → MIL · E45</div>
+                <div className="text-white font-semibold font-mono">DXB → RUH · E11</div>
               </div>
               <div className="px-3 py-1.5 rounded-full bg-white/10 border border-white/15 text-xs font-semibold text-white/80">
                 Live corridor

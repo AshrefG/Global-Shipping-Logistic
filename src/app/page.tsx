@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react"
 import { gsap } from "gsap"
+import Logo from "@/components/Logo"
 import HeroSection from "@/components/HeroSection"
 import IntroSection from "@/components/IntroSection"
 import ProblemSection from "@/components/ProblemSection"
@@ -13,21 +14,22 @@ import WhyUsSection from "@/components/WhyUsSection"
 import PartnersSection from "@/components/PartnersSection"
 import CareerSection from "@/components/CareerSection"
 import NewsSection from "@/components/NewsSection"
+import CertBand from "@/components/CertBand"
 import FaqSection from "@/components/FaqSection"
 
 const loaderCopy = [
-  "Low Emission Road Freight",
-  "Cross-Border Trucking Network",
-  "Door-to-Door. Data-Driven.",
+  "Driven by You",
+  "Freight · Customs · Cold Chain",
+  "Part of Al Shirawi Group",
 ]
 
+// The five quality marks (LRQA audited, UKAS accredited)
 const backers = [
-  "Bayern Kapital",
-  "SOSV",
-  "Lowercarbon",
-  "FTTF",
-  "Future Planet",
-  "Farvatn",
+  "ISO 9001",
+  "ISO 14001",
+  "ISO 22000",
+  "ISO 45001",
+  "BRCGS",
 ]
 
 export default function Home() {
@@ -188,18 +190,7 @@ export default function Home() {
     <>
       <div ref={loadingRef} className="trans__wrapper" role="status" aria-label="Loading Global Shipping and Logistics">
         <div className="trans__logo" aria-hidden="true">
-          <svg viewBox="0 0 64 64" fill="none">
-            <rect x="8" y="8" width="48" height="48" rx="18" fill="url(#loaderLogoGradient)" />
-            <path d="M18 39.5L32 19.5L46 39.5H18Z" fill="white" />
-            <path d="M23 39.5H41" stroke="white" strokeWidth="3" strokeLinecap="round" />
-            <path d="M16 45H48" stroke="white" strokeWidth="3" strokeLinecap="round" opacity="0.75" />
-            <defs>
-              <linearGradient id="loaderLogoGradient" x1="8" y1="8" x2="56" y2="56" gradientUnits="userSpaceOnUse">
-                <stop stopColor="#F2B04B" />
-                <stop offset="1" stopColor="#E08A2E" />
-              </linearGradient>
-            </defs>
-          </svg>
+          <Logo height={52} />
         </div>
 
         <div className="trans__inner" aria-hidden="true">
@@ -223,7 +214,7 @@ export default function Home() {
             <div>
               <h1 className="trans__home-title">{loaderCopy[0]}</h1>
               <div className="trans__backers">
-                <div className="trans__backers-label">Backed by top-tier investors</div>
+                <div className="trans__backers-label">LRQA audited · UKAS accredited</div>
                 <div className="trans__backers-inner">
                   {backers.map((backer) => (
                     <span key={backer}>{backer}</span>
@@ -243,6 +234,7 @@ export default function Home() {
       <JourneySection />
       <TechSection />
       <WhyUsSection />
+      <CertBand />
       <PartnersSection />
       <CareerSection />
       <NewsSection />

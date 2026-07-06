@@ -9,24 +9,24 @@ import CountUp from "@/components/motion/CountUp"
 */
 
 const NUMBERS = [
-  { value: 240, suffix: "", label: "Trucks in the network" },
-  { value: 12, suffix: "", label: "Corridor hubs" },
-  { value: 1.4, decimals: 1, suffix: "M", label: "Kilometres / month" },
-  { value: 35, prefix: "−", suffix: "%", label: "CO₂ vs. market avg." },
+  { value: 50, suffix: "y", label: "In freight, since 1975" },
+  { value: 2, suffix: "", label: "Dubai campuses (DIP-1 + DIC)" },
+  { value: 5, suffix: "×", label: "Certified · LRQA / UKAS" },
+  { value: 9, suffix: "", label: "Industries served" },
 ]
 
 const REASONS = [
   {
+    title: "Part of Al Shirawi Group",
+    desc: "Half a century of industrial backbone behind every commitment — the stability of one of the UAE's largest business groups, the pace of a 3PL.",
+  },
+  {
     title: "Asset-backed, not a broker",
-    desc: "Our trucks, our drivers, our hubs. When we quote an ETA, we control every link that delivers it.",
+    desc: "Our warehouses, our fleet, our people. When we quote an ETA or a temperature, we control every link that delivers it.",
   },
   {
-    title: "Built on data from day one",
-    desc: "No retrofitted legacy systems — telematics, routing and customs run on one platform we engineered ourselves.",
-  },
-  {
-    title: "Emissions as a metric, not a slogan",
-    desc: "CO₂ per shipment sits next to price on every quote. Lower it per kilometre, prove it per invoice.",
+    title: "Certified, audited, renewed",
+    desc: "ISO 9001, 14001, 22000, 45001 and BRCGS — externally audited every year. Quality here is a maintained system, not a plaque.",
   },
 ]
 
@@ -71,7 +71,7 @@ export default function WhyUsSection() {
               {NUMBERS.map((n) => (
                 <div key={n.label} className="why-row">
                   <div className="font-mono text-4xl md:text-5xl font-bold text-white">
-                    <CountUp value={n.value} decimals={n.decimals ?? 0} prefix={n.prefix ?? ""} suffix={n.suffix} />
+                    <CountUp value={n.value} suffix={n.suffix} />
                   </div>
                   <div className="mt-2 text-xs uppercase tracking-[0.13em] text-gray-500">{n.label}</div>
                 </div>

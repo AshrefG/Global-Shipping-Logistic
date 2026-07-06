@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { cn } from "@/lib/utils"
+import Logo from "@/components/Logo"
 
 const navLinks = [
   { label: "Home.", href: "#" },
@@ -27,24 +28,16 @@ export default function Header() {
     return () => { document.body.style.overflow = "" }
   }, [mobileOpen])
 
-  const openContact = () => {
-    document.querySelector(".contact-popup")?.classList.add("active")
-    setMobileOpen(false)
-  }
+  // Modal open is handled globally by ContactModal via [data-popup="contact"];
+  // here we only collapse the mobile nav.
+  const closeMobile = () => setMobileOpen(false)
 
   return (
     <>
       <header className={cn("header", scrolled && "scrolled")}>
         <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
-          <a href="#" className="flex items-center gap-2 no-underline">
-            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="white">
-                <path d="M3 3h18v18H3V3zm2 2v14h14V5H5zm3 3h8v2H8V8zm0 4h8v2H8v-2zm0 4h5v2H8v-2z"/>
-              </svg>
-            </div>
-            <span className="font-bold text-lg hidden sm:block text-ink">
-              GSL
-            </span>
+          <a href="#" className="flex items-center no-underline" aria-label="Global Shipping & Logistics — home">
+            <Logo height={42} />
           </a>
 
           <nav className="hidden lg:flex items-center gap-8">
@@ -61,7 +54,7 @@ export default function Header() {
 
           <div className="flex items-center gap-4">
             <button
-              onClick={openContact}
+              data-popup="contact"
               className="btn btn-pri text-sm px-5 py-2.5 hidden sm:flex"
             >
               Get in touch
@@ -110,7 +103,7 @@ export default function Header() {
             </li>
           ))}
           <li className="mt-4">
-            <button onClick={openContact} className="btn btn-pri px-6 py-3 text-base font-semibold">
+            <button data-popup="contact" onClick={closeMobile} className="btn btn-pri px-6 py-3 text-base font-semibold">
               Get in touch
               <svg width="20" height="20" viewBox="0 0 32 32" fill="none">
                 <path fillRule="evenodd" clipRule="evenodd" d="M30.44 3.68L3 31.12.88 29l27.44-27.44L30.44 3.68z" fill="white"/>

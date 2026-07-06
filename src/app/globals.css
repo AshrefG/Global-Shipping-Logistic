@@ -348,23 +348,17 @@ html.lenis {
   position: absolute;
   top: 32px;
   left: 50%;
-  width: 88px;
-  height: 88px;
   z-index: 5;
   transform: translateX(-50%);
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 28px;
+  padding: 12px 16px;
+  border-radius: 24px;
   background: oklch(1 0 0 / 0.06);
   border: 1px solid oklch(1 0 0 / 0.12);
   backdrop-filter: blur(18px);
   box-shadow: 0 18px 60px oklch(0 0 0 / 0.35);
-}
-.trans__logo svg {
-  width: 58px;
-  height: 58px;
-  filter: drop-shadow(0 12px 22px oklch(0.78 0.15 75 / 0.3));
 }
 .trans__inner {
   position: absolute;
@@ -658,6 +652,20 @@ html.lenis {
   pointer-events: none;
   opacity: 0.04;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* News cursor image trail */
+.news-trail-img {
+  position: absolute;
+  width: 210px;
+  height: 140px;
+  object-fit: cover;
+  border-radius: 14px;
+  border: 1px solid var(--color-line);
+  box-shadow: 0 24px 60px oklch(0 0 0 / 0.5);
+  pointer-events: none;
+  z-index: 5;
+  will-change: transform, opacity;
 }
 
 /* Journey waypoints */

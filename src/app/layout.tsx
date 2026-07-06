@@ -20,10 +20,34 @@ const archivo = Archivo({
   axes: ["wdth"],
 });
 
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.gsldubai.com";
+const DESCRIPTION =
+  "GSL Dubai, part of Al Shirawi Group — 3PL freight forwarding, customs clearance, transport, cold chain warehousing (ambient to −25°C) and distribution across the UAE and GCC. ISO 9001, 14001, 22000, 45001 and BRCGS certified.";
+
 export const metadata: Metadata = {
-  title: "Global Shipping & Logistics | Road Freight, Engineered",
-  description:
-    "GSL moves freight by road — FTL, LTL, cross-border corridors and last-mile — with live tracking, lower emissions, and door-to-door reliability.",
+  metadataBase: new URL(SITE_URL),
+  title: "Global Shipping & Logistics Dubai | 3PL · Cold Chain · Driven by You",
+  description: DESCRIPTION,
+  keywords: [
+    "3PL Dubai", "cold chain warehousing Dubai", "freight forwarding Dubai",
+    "customs clearance UAE", "port haulage Jebel Ali", "distribution UAE",
+    "Al Shirawi Group", "BRCGS certified logistics",
+  ],
+  alternates: { canonical: "/" },
+  openGraph: {
+    type: "website",
+    url: SITE_URL,
+    siteName: "Global Shipping & Logistics",
+    title: "Global Shipping & Logistics Dubai | 3PL · Cold Chain · Driven by You",
+    description: DESCRIPTION,
+    locale: "en_US",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Global Shipping & Logistics Dubai | 3PL · Cold Chain · Driven by You",
+    description: DESCRIPTION,
+  },
+  robots: { index: true, follow: true },
 };
 
 export default function RootLayout({

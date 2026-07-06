@@ -1,8 +1,11 @@
 # Global Shipping & Logistics (GSL)
 
-Marketing site for **GSL** — a **road-freight-first** logistics company:
-trucking (FTL/LTL), cross-border corridors, and last-mile, with ocean and other
-modes as complementary services in an integrated door-to-door network.
+Marketing site for **Global Shipping & Logistics (L.L.C)** — a Dubai **3PL,
+part of Al Shirawi Group** (freight roots since 1975): international freight,
+customs clearance, port haulage, **cold chain warehousing (ambient to −25°C)**,
+distribution, VAS and stocktaking/merchandising across the UAE and GCC.
+ISO 9001/14001/22000/45001 + BRCGS certified (LRQA/UKAS). Original site:
+https://www.gsldubai.com — tagline **"Driven by You."**
 
 > 🎬 A **dark-cinematic premium redesign** is underway on `dev` — see
 > [ROADMAP.md](./ROADMAP.md) (phases), [PRODUCT.md](./PRODUCT.md) (strategy),

@@ -6,9 +6,12 @@ This version has breaking changes — APIs, conventions, and file structure may 
 
 # Project context
 
-**Global Shipping & Logistics (GSL)** — marketing site for a **road-freight-first**
-logistics company (trucking/FTL/LTL, cross-border corridors, last-mile; ocean as a
-complementary mode). A dark-cinematic premium redesign is in progress on `dev`:
+**Global Shipping & Logistics (L.L.C)** — marketing site for a **Dubai 3PL, part
+of Al Shirawi Group** (freight roots 1975; original site: gsldubai.com). Services:
+international freight, customs, port haulage, cold chain warehousing (ambient to
+−25°C), distribution, VAS, stocktaking. Certified ISO 9001/14001/22000/45001 +
+BRCGS (LRQA/UKAS). Road transport is the visual hero; facts must match gsldubai.com.
+A dark-cinematic premium redesign is in progress on `dev`:
 strategy in `PRODUCT.md`, visual system in `DESIGN.md`, phases in `ROADMAP.md` —
 read all three before UI work. New UI must follow DESIGN.md (dark OKLCH tokens,
 amber accent, Archivo display + Geist), not the legacy green/blue theme.
