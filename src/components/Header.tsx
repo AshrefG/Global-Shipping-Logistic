@@ -27,10 +27,9 @@ export default function Header() {
     return () => { document.body.style.overflow = "" }
   }, [mobileOpen])
 
-  const openContact = () => {
-    document.querySelector(".contact-popup")?.classList.add("active")
-    setMobileOpen(false)
-  }
+  // Modal open is handled globally by ContactModal via [data-popup="contact"];
+  // here we only collapse the mobile nav.
+  const closeMobile = () => setMobileOpen(false)
 
   return (
     <>
@@ -61,7 +60,7 @@ export default function Header() {
 
           <div className="flex items-center gap-4">
             <button
-              onClick={openContact}
+              data-popup="contact"
               className="btn btn-pri text-sm px-5 py-2.5 hidden sm:flex"
             >
               Get in touch
@@ -110,7 +109,7 @@ export default function Header() {
             </li>
           ))}
           <li className="mt-4">
-            <button onClick={openContact} className="btn btn-pri px-6 py-3 text-base font-semibold">
+            <button data-popup="contact" onClick={closeMobile} className="btn btn-pri px-6 py-3 text-base font-semibold">
               Get in touch
               <svg width="20" height="20" viewBox="0 0 32 32" fill="none">
                 <path fillRule="evenodd" clipRule="evenodd" d="M30.44 3.68L3 31.12.88 29l27.44-27.44L30.44 3.68z" fill="white"/>

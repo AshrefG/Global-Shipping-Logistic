@@ -71,8 +71,28 @@ export default function Footer() {
           </div>
         </div>
 
+        {/* Legal */}
+        <div className="mt-16 pt-8 border-t border-white/10 grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div id="legal" className="scroll-mt-24">
+            <div className="text-gray-400 text-xs uppercase tracking-wider mb-2">Legal notice</div>
+            <p className="text-xs text-gray-500 leading-relaxed max-w-md">
+              Global Shipping &amp; Logistics GmbH · Am Sandtorkai 50, 20457 Hamburg, Germany ·
+              Managing directors: as registered · Commercial register: Amtsgericht Hamburg ·
+              VAT ID available on request.
+            </p>
+          </div>
+          <div id="privacy" className="scroll-mt-24">
+            <div className="text-gray-400 text-xs uppercase tracking-wider mb-2">Privacy</div>
+            <p className="text-xs text-gray-500 leading-relaxed max-w-md">
+              We process contact-form data solely to answer your request (GDPR Art. 6(1)(b)) and
+              never sell it. Tracking data from shipments stays between you and your consignee.
+              Questions: <a href="mailto:info@globalshipping-logistics.com" className="text-gray-400 hover:text-white transition-colors">info@globalshipping-logistics.com</a>.
+            </p>
+          </div>
+        </div>
+
         {/* Bottom */}
-        <div className="mt-16 pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-4">
+        <div className="mt-10 pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="text-gray-500 text-xs">© 2025, Global Shipping & Logistics. All Rights Reserved.</div>
           <div className="flex items-center gap-6">
             <a href="#legal" className="text-gray-400 text-xs hover:text-white transition-colors no-underline">Legal notice</a>

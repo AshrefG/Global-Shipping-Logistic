@@ -20,10 +20,33 @@ const archivo = Archivo({
   axes: ["wdth"],
 });
 
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://globalshipping-logistics.com";
+const DESCRIPTION =
+  "GSL moves freight by road — FTL, LTL, cross-border corridors and last-mile — with live tracking, lower emissions, and door-to-door reliability.";
+
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: "Global Shipping & Logistics | Road Freight, Engineered",
-  description:
-    "GSL moves freight by road — FTL, LTL, cross-border corridors and last-mile — with live tracking, lower emissions, and door-to-door reliability.",
+  description: DESCRIPTION,
+  keywords: [
+    "road freight", "FTL", "LTL", "cross-border trucking", "last-mile delivery",
+    "logistics Hamburg", "Europe North Africa corridors", "low emission freight",
+  ],
+  alternates: { canonical: "/" },
+  openGraph: {
+    type: "website",
+    url: SITE_URL,
+    siteName: "Global Shipping & Logistics",
+    title: "Global Shipping & Logistics | Road Freight, Engineered",
+    description: DESCRIPTION,
+    locale: "en_US",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Global Shipping & Logistics | Road Freight, Engineered",
+    description: DESCRIPTION,
+  },
+  robots: { index: true, follow: true },
 };
 
 export default function RootLayout({

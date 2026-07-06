@@ -83,18 +83,22 @@ Each section reimagined in the new system — varied rhythm, no uniform card gri
   (links stubbed until the blog/CMS lands).
 - ⚪ **Footer** — premium CTA band refresh (fold into Phase 4 polish).
 
-## Phase 4 — Polish & production (branch: `feat/polish`)
+## Phase 4 — Polish & production (branch: `feat/phase4-polish`)
 
-- ⚪ **Contact form wired** — API route, validation, success/error states,
-  focus trap in modal.
-- ⚪ **Reduced-motion & a11y audit** — full coverage sweep, keyboard nav,
-  contrast verification against DESIGN.md tokens.
-- ⚪ **Performance budget** — code-split three.js, image optimization,
-  Lighthouse ≥90 perf on mid-range mobile; kill jank on pinned scenes.
-- ⚪ **SEO/metadata** — road-freight keywords, OG image in new brand, sitemap.
-- ⚪ **Responsive QA** — pinned scenes degrade gracefully on mobile
-  (shorter scrub distances or stacked fallbacks).
-- ⚪ **Legal / Privacy** (`#legal`, `#privacy`) — real targets.
+- 🟢 **Contact form wired** — `/api/contact` route with field validation
+  (422 + per-field errors), sending/success/error states, focus trap,
+  Escape close, focus restore. TODO: hand off to an email provider via env.
+- 🟢 **News image trail** — cursor-trailing images on article hover
+  (fine-pointer only, reduced-motion off).
+- 🟢 **SEO/metadata** — OG/Twitter cards, keywords, canonical,
+  `sitemap.ts`, `robots.ts` (API disallowed). OG image: see backlog `/og`.
+- 🟢 **Legal / Privacy** (`#legal`, `#privacy`) — real footer targets with
+  notice + GDPR summary.
+- ⚪ **Reduced-motion & a11y audit** — final sweep (contrast, keyboard nav
+  across all sections); per-component guards already in place.
+- ⚪ **Performance budget** — Lighthouse ≥90 on mid-range mobile; three.js
+  already code-split/lazy.
+- ⚪ **Responsive QA** — device pass on pinned scenes and sticky stack.
 
 ## Foundations (cross-cutting)
 
