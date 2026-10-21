@@ -43,3 +43,5 @@ next-env.d.ts
 # ignored files
 updated_state.md
 home.html
+# Playwright CLI output (may contain credentials)
+.playwright-cli/

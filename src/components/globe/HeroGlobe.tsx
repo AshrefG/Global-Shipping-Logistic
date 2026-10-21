@@ -1,6 +1,6 @@
 "use client"
 
-import { useMemo, useRef } from "react"
+import { useEffect, useMemo, useRef, useState } from "react"
 import { Canvas, useFrame } from "@react-three/fiber"
 import { Line } from "@react-three/drei"
 import * as THREE from "three"
@@ -14,7 +14,7 @@ const DOT_GRAY = "#4a5060"
 
 /** Freight network hubs (road-first GCC corridors, Dubai HQ) */
 const HUBS: Record<string, [lat: number, lng: number]> = {
-  DXB: [25.2, 55.27],   // Dubai — HQ (DIP-1 / Dubai Industrial City)
+  DXB: [25.2, 55.27],   // Dubai, HQ (DIP-1 / Dubai Industrial City)
   AUH: [24.45, 54.38],  // Abu Dhabi
   RUH: [24.71, 46.68],  // Riyadh
   JED: [21.49, 39.19],  // Jeddah
@@ -23,19 +23,27 @@ const HUBS: Record<string, [lat: number, lng: number]> = {
   MCT: [23.59, 58.41],  // Muscat
 }
 
+/** Every corridor leaves Dubai, so the network reads as one fan from HQ */
 const CORRIDORS: Array<[keyof typeof HUBS, keyof typeof HUBS]> = [
+  ["DXB", "JED"],
   ["DXB", "RUH"],
-  ["DXB", "DOH"],
   ["DXB", "KWI"],
+  ["DXB", "DOH"],
   ["DXB", "MCT"],
-  ["RUH", "JED"],
   ["DXB", "AUH"],
 ]
 
 const R = 1
-/** Face the GCC cluster (≈lat 25°, lng 52°) toward the camera */
+/** Yaw that brings the GCC (≈lng 52°) to the front of the globe */
 const BASE_YAW = -2.43
-const BASE_TILT = 0.5
+/**
+ * No lean: the GCC (lat 25) sits a little above the centre of the disc, so each
+ * corridor lifts off the surface as its own hump (longer route, taller hump)
+ * instead of pointing straight at the camera.
+ */
+const BASE_TILT = 0
+/** Camera distance that fits the whole globe and its rim inside the card */
+const CAMERA_Z = 3
 
 function latLngToVec3(lat: number, lng: number, radius = R): THREE.Vector3 {
   const phi = ((90 - lat) * Math.PI) / 180
@@ -47,16 +55,17 @@ function latLngToVec3(lat: number, lng: number, radius = R): THREE.Vector3 {
   )
 }
 
+/** Arc height grows with distance, so the routes nest instead of overlapping */
 function corridorCurve(a: THREE.Vector3, b: THREE.Vector3): THREE.QuadraticBezierCurve3 {
   const mid = a.clone().add(b).multiplyScalar(0.5)
-  const lift = 1 + Math.max(a.distanceTo(b) * 0.45, 0.06)
+  const lift = 1 + 0.02 + a.distanceTo(b) * 1.1
   mid.normalize().multiplyScalar(R * lift)
   return new THREE.QuadraticBezierCurve3(a, mid, b)
 }
 
 /* -------------------------------------------------------------- pieces --- */
 
-/** Evenly distributed dot shell — abstract landless globe, engineered look */
+/** Evenly distributed dot shell: abstract landless globe, engineered look */
 function DotShell({ count = 2000 }: { count?: number }) {
   const positions = useMemo(() => {
     const pts = new Float32Array(count * 3)
@@ -77,14 +86,14 @@ function DotShell({ count = 2000 }: { count?: number }) {
       <bufferGeometry>
         <bufferAttribute attach="attributes-position" args={[positions, 3]} />
       </bufferGeometry>
-      <pointsMaterial size={0.016} color={DOT_GRAY} sizeAttenuation transparent opacity={0.9} />
+      <pointsMaterial size={0.02} color={DOT_GRAY} sizeAttenuation transparent opacity={0.9} />
     </points>
   )
 }
 
 function Corridor({ from, to, offset }: { from: THREE.Vector3; to: THREE.Vector3; offset: number }) {
   const curve = useMemo(() => corridorCurve(from, to), [from, to])
-  const points = useMemo(() => curve.getPoints(48), [curve])
+  const points = useMemo(() => curve.getPoints(64), [curve])
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const lineRef = useRef<any>(null)
   const pulseRef = useRef<THREE.Mesh>(null)
@@ -93,9 +102,9 @@ function Corridor({ from, to, offset }: { from: THREE.Vector3; to: THREE.Vector3
   useFrame(({ clock }) => {
     if (still) return
     const mat = lineRef.current?.material
-    if (mat && "dashOffset" in mat) mat.dashOffset = -clock.elapsedTime * 0.12
+    if (mat && "dashOffset" in mat) mat.dashOffset = -clock.elapsedTime * 0.08
     if (pulseRef.current) {
-      const t = (clock.elapsedTime * 0.07 + offset) % 1
+      const t = (clock.elapsedTime * 0.11 + offset) % 1
       pulseRef.current.position.copy(curve.getPoint(t))
     }
   })
@@ -106,34 +115,36 @@ function Corridor({ from, to, offset }: { from: THREE.Vector3; to: THREE.Vector3
         ref={lineRef}
         points={points}
         color={AMBER}
-        lineWidth={2}
+        lineWidth={1.4}
         dashed
-        dashSize={0.05}
-        gapSize={0.028}
+        dashSize={0.03}
+        gapSize={0.018}
         transparent
         opacity={0.95}
       />
-      {/* freight pulse traveling the corridor */}
-      <mesh ref={pulseRef} position={points[0]}>
-        <sphereGeometry args={[0.022, 12, 12]} />
+      {/* freight pulse travelling out from Dubai */}
+      <mesh ref={pulseRef} position={points[Math.round(offset * 48)]}>
+        <sphereGeometry args={[0.009, 12, 12]} />
         <meshBasicMaterial color={AMBER_HOT} />
       </mesh>
     </group>
   )
 }
 
-function Hub({ position }: { position: THREE.Vector3 }) {
+function Hub({ position, primary = false }: { position: THREE.Vector3; primary?: boolean }) {
   return (
     <group position={position}>
       <mesh>
-        <sphereGeometry args={[0.026, 12, 12]} />
+        <sphereGeometry args={[primary ? 0.018 : 0.009, 12, 12]} />
         <meshBasicMaterial color={AMBER} />
       </mesh>
-      {/* soft halo */}
-      <mesh>
-        <sphereGeometry args={[0.05, 12, 12]} />
-        <meshBasicMaterial color={AMBER} transparent opacity={0.18} />
-      </mesh>
+      {/* soft halo, only on the Dubai HQ */}
+      {primary && (
+        <mesh>
+          <sphereGeometry args={[0.036, 16, 16]} />
+          <meshBasicMaterial color={AMBER} transparent opacity={0.14} />
+        </mesh>
+      )}
     </group>
   )
 }
@@ -153,11 +164,11 @@ function Scene() {
   useFrame((state) => {
     const g = group.current
     if (!g) return
-    // gentle sway around the corridor cluster — the network stays on camera
+    // gentle sway around the corridor cluster: the network stays on camera
     if (!still) {
-      g.rotation.y = BASE_YAW + Math.sin(state.clock.elapsedTime * 0.14) * 0.38
+      g.rotation.y = BASE_YAW + Math.sin(state.clock.elapsedTime * 0.14) * 0.22
     }
-    // pointer parallax — gentle lean toward the cursor
+    // pointer parallax: gentle lean toward the cursor
     const px = state.pointer.x * 0.12
     const py = state.pointer.y * 0.08
     g.rotation.x = THREE.MathUtils.lerp(g.rotation.x, BASE_TILT - py, 0.05)
@@ -166,7 +177,7 @@ function Scene() {
 
   return (
     // Start rotated so the GCC corridor cluster faces the camera
-    <group ref={group} rotation={[BASE_TILT, BASE_YAW, 0]}>
+    <group ref={group} position={[0, -0.02, 0]} rotation={[BASE_TILT, BASE_YAW, 0]}>
       {/* body */}
       <mesh>
         <sphereGeometry args={[R * 0.985, 48, 48]} />
@@ -188,8 +199,8 @@ function Scene() {
       {CORRIDORS.map(([a, b], i) => (
         <Corridor key={`${a}-${b}`} from={hubVecs[a]} to={hubVecs[b]} offset={i / CORRIDORS.length} />
       ))}
-      {Object.values(hubVecs).map((v, i) => (
-        <Hub key={i} position={v} />
+      {Object.entries(hubVecs).map(([k, v]) => (
+        <Hub key={k} position={v} primary={k === "DXB"} />
       ))}
     </group>
   )
@@ -198,18 +209,31 @@ function Scene() {
 /* -------------------------------------------------------------- export --- */
 
 /**
- * 3D freight-network globe (Phase 1). Client-only — import via next/dynamic
- * with `ssr: false`. Reduced motion: static frame, no rotation or pulses.
+ * 3D freight-network globe. Client-only: import via next/dynamic with
+ * `ssr: false`. Renders only while on screen. Reduced motion: static frame,
+ * no rotation or pulses.
  */
 export default function HeroGlobe({ className }: { className?: string }) {
+  const wrapRef = useRef<HTMLDivElement>(null)
+  const [inView, setInView] = useState(true)
   const still = prefersReducedMotion()
+
+  // Stop the render loop while the card is off screen
+  useEffect(() => {
+    const el = wrapRef.current
+    if (!el || !("IntersectionObserver" in window)) return
+    const io = new IntersectionObserver(([entry]) => setInView(entry.isIntersecting))
+    io.observe(el)
+    return () => io.disconnect()
+  }, [])
+
   return (
-    <div className={className} aria-hidden="true">
+    <div ref={wrapRef} className={className} aria-hidden="true">
       <Canvas
         dpr={[1, 1.75]}
-        camera={{ position: [0, 0, 2.2], fov: 42 }}
+        camera={{ position: [0, 0, CAMERA_Z], fov: 42 }}
         gl={{ antialias: true, alpha: true }}
-        frameloop={still ? "demand" : "always"}
+        frameloop={still ? "demand" : inView ? "always" : "never"}
         style={{ background: "transparent" }}
       >
         <Scene />

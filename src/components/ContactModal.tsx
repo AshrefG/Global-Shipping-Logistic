@@ -1,6 +1,7 @@
 "use client"
 
 import { useCallback, useEffect, useRef, useState } from "react"
+import { SCROLL_LOCK, SCROLL_UNLOCK } from "@/lib/gsap"
 
 /*
   Contact modal (Phase 4): controlled open state, real submission to
@@ -37,6 +38,19 @@ export default function ContactModal() {
     document.addEventListener("click", onClick)
     return () => document.removeEventListener("click", onClick)
   }, [])
+
+  // The page holds still under the open dialog (Lenis + native scroll),
+  // as the mobile menu does; scrubbed scenes stop with it.
+  useEffect(() => {
+    if (!open) return
+    const previous = document.body.style.overflow
+    document.body.style.overflow = "hidden"
+    window.dispatchEvent(new Event(SCROLL_LOCK))
+    return () => {
+      document.body.style.overflow = previous
+      window.dispatchEvent(new Event(SCROLL_UNLOCK))
+    }
+  }, [open])
 
   // Focus trap + Escape while open
   useEffect(() => {
@@ -130,6 +144,7 @@ export default function ContactModal() {
       <div
         ref={dialogRef}
         className="popup__main"
+        data-lenis-prevent
         role="dialog"
         aria-modal="true"
         aria-label="Contact Global Shipping & Logistics"
@@ -143,7 +158,7 @@ export default function ContactModal() {
             </div>
             <h3 className="text-2xl font-semibold text-gray-900">Message sent.</h3>
             <p className="text-gray-600 text-sm max-w-sm">
-              Thanks for reaching out — a corridor specialist will get back to
+              Thanks for reaching out. A corridor specialist will get back to
               you within one business day.
             </p>
             <button type="button" onClick={close} className="btn btn-pri px-8 py-3">
@@ -157,7 +172,7 @@ export default function ContactModal() {
                 Get in touch with us!
               </h3>
               <p className="text-gray-600 text-sm">
-                Tell us what you ship and where it goes — we&apos;ll come back
+                Tell us what you ship and where it goes. We&apos;ll come back
                 with a corridor plan and a quote.
               </p>
             </div>
@@ -206,7 +221,7 @@ export default function ContactModal() {
 
             {status === "error" && (
               <p className="text-sm text-accent">
-                Something went wrong sending your message — please try again,
+                Something went wrong sending your message. Please try again,
                 or email us directly.
               </p>
             )}

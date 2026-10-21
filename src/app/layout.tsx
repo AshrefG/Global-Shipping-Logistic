@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import { Archivo, Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import ClientLayout from "@/components/ClientLayout";
@@ -22,7 +23,7 @@ const archivo = Archivo({
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.gsldubai.com";
 const DESCRIPTION =
-  "GSL Dubai, part of Al Shirawi Group — 3PL freight forwarding, customs clearance, transport, cold chain warehousing (ambient to −25°C) and distribution across the UAE and GCC. ISO 9001, 14001, 22000, 45001 and BRCGS certified.";
+  "GSL Dubai, part of Al Shirawi Group. 3PL freight forwarding, customs clearance, transport, cold chain warehousing (ambient to −25°C) and distribution across the UAE and GCC. ISO 9001, 14001, 22000, 45001 and BRCGS certified.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -62,6 +63,13 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col" suppressHydrationWarning>
+        {/* Every visit starts at the top, behind the loader gate: a restored
+            mid-page scroll would create scroll triggers past their start
+            before the pinned scenes have been measured. A #hash in the URL is
+            kept aside and replayed by ClientLayout once the gate opens. */}
+        <Script id="scroll-reset" strategy="beforeInteractive">
+          {`history.scrollRestoration="manual";if(location.hash){window.__gslHash=location.hash;history.replaceState(null,"",location.pathname+location.search)}window.scrollTo(0,0);`}
+        </Script>
         <ClientLayout>{children}</ClientLayout>
       </body>
     </html>
