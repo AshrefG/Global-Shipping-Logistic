@@ -51,13 +51,26 @@
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
   --font-display: var(--font-archivo);
+
+  /* Motion curves → ease-expo / ease-quint / ease-travel / ease-exit utilities.
+     No overshoot anywhere: freight has mass. */
+  --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-quint: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-travel: cubic-bezier(0.76, 0, 0.24, 1);
+  --ease-exit: cubic-bezier(0.55, 0.055, 0.675, 0.19);
 }
 
 :root {
   --background: oklch(0.14 0.01 255);
   --foreground: oklch(0.965 0.004 90);
   /* Semantic z-scale */
+  --z-seam: 50; /* section-transition seams (ContainerWipe, LaneSeam) */
   --z-nav: 100;
+  /* Motion durations for CSS transitions (GSAP mirrors these in lib/gsap DUR) */
+  --t-press: 140ms;
+  --t-hover: 180ms;
+  --t-ui: 240ms;
+  --t-reveal: 800ms;
   --z-overlay: 200;
   --z-modal: 300;
   --z-loader: 400;
@@ -72,6 +85,15 @@ body {
 
 html {
   scroll-behavior: auto;
+  /* the fixed header clearance for keyboard focus, native anchor jumps and
+     Lenis glides (Lenis reads this value for element targets) */
+  scroll-padding-top: 90px;
+}
+
+/* Programmatic focus targets (sections focused after a nav jump, main after
+   the skip link) take focus without drawing a ring around a whole section */
+[tabindex="-1"]:focus {
+  outline: none;
 }
 
 ::selection {
@@ -131,6 +153,12 @@ html.lenis {
 }
 .marquee-inner--right {
   animation-direction: reverse;
+}
+/* A visitor can stop any marquee to read it (WCAG 2.2.2) */
+@media (hover: hover) {
+  .marquee:hover .marquee-inner {
+    animation-play-state: paused;
+  }
 }
 @keyframes marquee {
   0% { transform: translateX(0); }
@@ -198,33 +226,59 @@ html.lenis {
   transform: translate(-4px, 4px);
 }
 
-/* FAQ */
+/* FAQ: lane-divider rows, grid-rows accordion (real height, no max-height guess) */
 .faq-item {
-  border-bottom: 1px solid var(--color-line);
-  cursor: pointer;
+  position: relative;
+}
+.faq-item__rule {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: var(--color-line);
+  transform-origin: left center;
 }
 .faq-item__head {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 20px 0;
+  padding: 22px 0;
   gap: 16px;
+  color: inherit;
+  font: inherit;
+}
+.faq-item__q {
+  transition: color var(--t-hover) ease;
+}
+.faq-item.active .faq-item__q {
+  color: var(--color-primary);
+}
+@media (hover: hover) {
+  .faq-item__head:hover .faq-item__q {
+    color: var(--color-primary);
+  }
 }
 .faq-item__body {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.4s ease, padding 0.4s ease;
-  padding: 0;
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 320ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 .faq-item.active .faq-item__body {
-  max-height: 500px;
-  padding-bottom: 20px;
+  grid-template-rows: 1fr;
+}
+.faq-item__inner {
+  min-height: 0;
+  overflow: hidden;
 }
 .faq-item__icon {
-  transition: transform 0.3s ease;
+  display: inline-flex;
   flex-shrink: 0;
+  color: var(--color-gray-500);
+  transition: transform 320ms cubic-bezier(0.22, 1, 0.36, 1), color var(--t-hover) ease;
 }
 .faq-item.active .faq-item__icon {
+  color: var(--color-primary);
   transform: rotate(45deg);
 }
 
@@ -266,7 +320,39 @@ html.lenis {
   width: 100%;
   z-index: var(--z-nav);
   padding: 16px 0;
-  transition: background 0.3s ease, padding 0.3s ease;
+  transition: background 0.3s ease, padding 0.3s ease,
+    transform var(--t-ui) cubic-bezier(0.22, 1, 0.36, 1);
+}
+/* Hides on scroll down, returns on scroll up (Header.tsx decides when) */
+.header.header--hidden {
+  transform: translateY(-100%);
+}
+/* Nav links: colour on hover, amber dot under the section in view */
+.header__link {
+  position: relative;
+  transition: color var(--t-hover) ease;
+}
+@media (hover: hover) {
+  .header__link:hover {
+    color: var(--color-primary);
+  }
+}
+.header__dot {
+  position: absolute;
+  left: 50%;
+  bottom: -9px;
+  width: 5px;
+  height: 5px;
+  margin-left: -2.5px;
+  border-radius: 9999px;
+  background: var(--color-primary);
+  opacity: 0;
+  transform: scale(0);
+  transition: opacity var(--t-ui) ease, transform var(--t-ui) cubic-bezier(0.22, 1, 0.36, 1);
+}
+.header__link[aria-current] .header__dot {
+  opacity: 1;
+  transform: scale(1);
 }
 .header.scrolled {
   background: oklch(0.12 0.01 255 / 0.85);
@@ -288,11 +374,14 @@ html.lenis {
   justify-content: center;
   visibility: hidden;
   opacity: 0;
-  transition: all 0.4s ease;
+  /* Closing: quick ease-in fade, visibility drops once it is gone */
+  transition: opacity 200ms cubic-bezier(0.55, 0.055, 0.675, 0.19), visibility 0s linear 200ms;
 }
 .popup.active {
   visibility: visible;
   opacity: 1;
+  /* Opening: visible at once (so focus can land), fade in on quint-out */
+  transition: opacity 300ms cubic-bezier(0.22, 1, 0.36, 1), visibility 0s;
 }
 .popup__overlay {
   position: absolute;
@@ -312,11 +401,12 @@ html.lenis {
   border: 1px solid var(--color-line);
   border-radius: 16px;
   padding: 40px;
-  transform: scale(0.9);
-  transition: transform 0.4s ease;
+  transform: scale(0.96);
+  transition: transform 200ms cubic-bezier(0.55, 0.055, 0.675, 0.19);
 }
 .popup.active .popup__main {
   transform: scale(1);
+  transition: transform 300ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 .popup__close {
   position: absolute;
@@ -329,75 +419,68 @@ html.lenis {
   justify-content: center;
   border-radius: 50%;
   color: var(--color-ink);
-  transition: background 0.3s ease;
+  transition: background var(--t-hover) ease, transform var(--t-press) ease;
 }
-.popup__close:hover {
-  background: var(--color-surface-2);
+.popup__close:active {
+  transform: scale(0.94);
+}
+@media (hover: hover) {
+  .popup__close:hover {
+    background: var(--color-surface-2);
+  }
 }
 
-/* Loading transition — night asphalt gate */
+/* Loading gate: a container roller door on the night asphalt */
 .trans__wrapper {
   position: fixed;
   inset: 0;
   z-index: var(--z-loader);
   overflow: hidden;
-  background: oklch(0.08 0.008 255);
   pointer-events: none;
+  color: var(--color-ink);
 }
-.trans__logo {
-  position: absolute;
-  top: 32px;
-  left: 50%;
-  z-index: 5;
-  transform: translateX(-50%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 12px 16px;
-  border-radius: 24px;
-  background: oklch(1 0 0 / 0.06);
-  border: 1px solid oklch(1 0 0 / 0.12);
-  backdrop-filter: blur(18px);
-  box-shadow: 0 18px 60px oklch(0 0 0 / 0.35);
-}
+/* Door ribs: closed from the first painted frame, GSAP rolls them up */
 .trans__inner {
   position: absolute;
   inset: 0;
-  z-index: 3;
   display: flex;
-  width: 100%;
-  height: 100%;
 }
 .trans__item {
+  position: relative;
   flex: 1;
-  background: linear-gradient(170deg, oklch(0.17 0.012 255), oklch(0.1 0.01 255) 70%);
-  transform: scaleY(0);
-  transform-origin: bottom;
-  box-shadow: inset 0 0 0 1px oklch(1 0 0 / 0.05);
+  background: oklch(0.1 0.01 255);
+  /* rib seams: a lit edge on one side, a groove on the other */
+  box-shadow:
+    inset 1px 0 0 oklch(1 0 0 / 0.035),
+    inset -1px 0 0 oklch(0 0 0 / 0.45);
 }
 .trans__item:nth-child(even) {
-  background: linear-gradient(170deg, oklch(0.14 0.012 255), oklch(0.08 0.008 255) 70%);
+  background: oklch(0.118 0.011 255);
+}
+/* Bottom rail: the amber edge that leads the door as it rolls up */
+.trans__item::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0;
+  height: 2px;
+  background: oklch(0.78 0.15 75 / 0.6);
+}
+.trans__logo {
+  position: absolute;
+  top: 28px;
+  inset-inline: 0;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
 }
 .trans__home {
   position: absolute;
   inset: 0;
-  z-index: 4;
+  z-index: 1;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 110px 24px 56px;
-  color: var(--color-ink);
-  pointer-events: none;
-}
-.trans__home::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background:
-    radial-gradient(circle at 20% 24%, oklch(0.78 0.15 75 / 0.14), transparent 34%),
-    radial-gradient(circle at 80% 74%, oklch(0.7 0.18 55 / 0.1), transparent 36%),
-    linear-gradient(135deg, oklch(0.08 0.008 255 / 0.98), oklch(0.12 0.012 255 / 0.98));
 }
 .trans__home-inner {
   width: min(1120px, 100%);
@@ -412,6 +495,7 @@ html.lenis {
   gap: 4px;
   line-height: 0.9;
   font-family: var(--font-mono), monospace;
+  font-variant-numeric: tabular-nums;
 }
 .trans__count-value {
   font-size: clamp(64px, 13vw, 152px);
@@ -421,22 +505,21 @@ html.lenis {
 .trans__count-percent {
   font-size: clamp(18px, 3vw, 34px);
   font-weight: 600;
-  color: oklch(1 0 0 / 0.55);
+  color: var(--color-ink-muted, oklch(0.74 0.012 255));
 }
-.trans__count-bar {
+/* Progress as a lane marking: dim dashes, amber dashes painted over them */
+.trans__lane {
+  position: relative;
   width: min(320px, 100%);
-  height: 2px;
+  height: 3px;
   margin-top: 28px;
-  overflow: hidden;
-  border-radius: 999px;
-  background: oklch(1 0 0 / 0.14);
+  background: repeating-linear-gradient(90deg, var(--color-line) 0 22px, transparent 22px 36px);
 }
-.trans__count-bar-inner {
-  height: 100%;
-  width: 0%;
-  border-radius: inherit;
-  background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
-  box-shadow: 0 0 24px oklch(0.78 0.15 75 / 0.5);
+.trans__lane-fill {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(90deg, var(--color-primary) 0 22px, transparent 22px 36px);
+  clip-path: inset(0 100% 0 0);
 }
 .trans__home-title {
   margin: 0;
@@ -452,47 +535,70 @@ html.lenis {
 }
 .trans__backers-label {
   margin-bottom: 14px;
-  color: oklch(1 0 0 / 0.55);
+  color: var(--color-ink-muted, oklch(0.74 0.012 255));
+  font-family: var(--font-mono), monospace;
   font-size: 12px;
-  font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.22em;
+  letter-spacing: 0.14em;
 }
 .trans__backers-inner {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 8px;
 }
 .trans__backers-inner span {
   display: inline-flex;
   align-items: center;
-  min-height: 36px;
-  padding: 8px 14px;
+  min-height: 34px;
+  padding: 7px 14px;
   border-radius: 999px;
-  border: 1px solid oklch(1 0 0 / 0.16);
-  background: oklch(1 0 0 / 0.06);
-  backdrop-filter: blur(14px);
-  color: oklch(1 0 0 / 0.84);
+  border: 1px solid var(--color-line);
+  color: var(--color-ink);
+  font-family: var(--font-mono), monospace;
   font-size: 12px;
-  font-weight: 600;
 }
-.trans__home::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background-image:
-    linear-gradient(oklch(1 0 0 / 0.05) 1px, transparent 1px),
-    linear-gradient(90deg, oklch(1 0 0 / 0.05) 1px, transparent 1px);
-  background-size: 48px 48px;
-  mask-image: linear-gradient(to bottom, transparent, black 16%, black 84%, transparent);
-  opacity: 0.55;
+@media (max-width: 720px) {
+  .trans__home {
+    align-items: flex-end;
+    padding: 96px 24px 64px;
+  }
+  .trans__home-inner {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
 }
 
 /* Hero enhancements */
 .hero__eyebrow {
-  box-shadow: inset 0 0 0 1px oklch(1 0 0 / 0.14);
-  animation: heroFloat 6s ease-in-out infinite;
+  border: 1px solid var(--color-line);
+  background: oklch(1 0 0 / 0.03);
+}
+/* Secondary action: DESIGN.md hairline ghost pill */
+.hero__ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 13px 31px;
+  border-radius: 9999px;
+  border: 1px solid var(--color-line);
+  background-color: transparent;
+  color: var(--color-ink);
+  font-size: 16px;
+  font-weight: 600;
+  transition:
+    transform var(--t-press) cubic-bezier(0.22, 1, 0.36, 1),
+    background-color var(--t-hover) ease,
+    border-color var(--t-hover) ease;
+}
+.hero__ghost:active {
+  transform: scale(0.97);
+}
+@media (hover: hover) and (pointer: fine) {
+  .hero__ghost:hover {
+    background-color: oklch(0.19 0.012 255);
+    border-color: oklch(0.5 0.012 255);
+  }
 }
 .hero__visual-card {
   position: relative;
@@ -512,7 +618,6 @@ html.lenis {
   background:
     radial-gradient(circle, oklch(0.78 0.15 75 / 0.2), transparent 34%),
     radial-gradient(circle at 72% 38%, oklch(0.7 0.18 55 / 0.14), transparent 30%);
-  animation: heroGlow 10s ease-in-out infinite;
 }
 .hero__visual-card::after {
   content: "";
@@ -604,14 +709,6 @@ html.lenis {
   letter-spacing: 0.13em;
 }
 
-@keyframes heroFloat {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-6px); }
-}
-@keyframes heroGlow {
-  0%, 100% { transform: translate3d(-3%, -2%, 0) rotate(0deg) scale(1); }
-  50% { transform: translate3d(4%, 3%, 0) rotate(12deg) scale(1.08); }
-}
 @keyframes routeDash {
   to { stroke-dashoffset: -220; }
 }
@@ -654,20 +751,6 @@ html.lenis {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
-/* News cursor image trail */
-.news-trail-img {
-  position: absolute;
-  width: 210px;
-  height: 140px;
-  object-fit: cover;
-  border-radius: 14px;
-  border: 1px solid var(--color-line);
-  box-shadow: 0 24px 60px oklch(0 0 0 / 0.5);
-  pointer-events: none;
-  z-index: 5;
-  will-change: transform, opacity;
-}
-
 /* Journey waypoints */
 .journey-stop--active .journey-stop-dot {
   border-color: var(--color-primary);
@@ -690,12 +773,28 @@ html.lenis {
   border-left: 1px solid var(--color-line);
   z-index: 99;
   padding: 100px 40px 40px;
-  transform: translateX(100%);
-  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  /* Closed = wiped shut from the right edge. A clip keeps the panel's box
+     inside the viewport (a translated fixed panel adds horizontal overflow);
+     visibility keeps its links out of the tab order while closed. */
+  clip-path: inset(0 0 0 100%);
+  visibility: hidden;
+  transition: clip-path 300ms cubic-bezier(0.55, 0.055, 0.675, 0.19), visibility 0s 300ms;
+}
+.header__nav-link {
+  transition: color var(--t-hover) ease;
+}
+.header__nav-link[aria-current] {
+  color: var(--color-primary);
+}
+@media (hover: hover) {
+  .header__nav-link:hover {
+    color: var(--color-primary);
+  }
 }
 .header__nav.active {
-  transform: translateX(0);
-  box-shadow: -10px 0 30px oklch(0 0 0 / 0.4);
+  clip-path: inset(0 0 0 0);
+  visibility: visible;
+  transition: clip-path 420ms cubic-bezier(0.22, 1, 0.36, 1), visibility 0s;
 }
 
 .nav-overlay {
@@ -715,11 +814,26 @@ html.lenis {
   visibility: visible;
 }
 
+/* Reduced motion: header, menu, modal and accordion change state without travel */
+@media (prefers-reduced-motion: reduce) {
+  .header,
+  .header__nav,
+  .header__nav.active,
+  .faq-item__body,
+  .faq-item__icon,
+  .popup__main,
+  .popup.active .popup__main {
+    transition: none;
+  }
+  .popup__main,
+  .popup.active .popup__main {
+    transform: none;
+  }
+}
+
 /* Reduced motion: ambient/decorative animation off, reveals become instant */
 @media (prefers-reduced-motion: reduce) {
   .marquee-inner,
-  .hero__eyebrow,
-  .hero__visual-card::before,
   .hero__route-path,
   .hero__route-dot {
     animation: none;

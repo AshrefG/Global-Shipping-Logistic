@@ -1,26 +1,31 @@
 "use client"
 
-import { useRef, type ReactNode } from "react"
+import { useRef } from "react"
 import { useGSAP } from "@gsap/react"
-import { gsap, EASE, prefersReducedMotion } from "@/lib/gsap"
+import { gsap, prefersReducedMotion } from "@/lib/gsap"
 
 type ContainerWipeProps = {
-  children: ReactNode
-  className?: string
-  /** Wipe direction the container "doors" open toward */
-  direction?: "up" | "left"
+  /** Background of the OUTGOING section (CSS color), e.g. "var(--color-gray-50)" */
+  from: string
+  /** Number of door ribs (slats) */
+  ribs?: number
+  /** How far the doors reach into the incoming section */
+  reach?: string
 }
 
 /**
- * Container-door section transition (DESIGN.md motif): content reveals
- * behind a clip-path wipe ribbed like container doors. Content is visible
- * by default; the wipe only engages when the animation actually runs.
- * Reduced motion = simple fade-in handled by CSS default state.
+ * Container-door section transition (DESIGN.md motif). Placed BETWEEN two
+ * sections in page.tsx: a zero-height seam whose ribs, painted in the
+ * outgoing section's colour, hang over the top of the incoming section and
+ * roll up into the seam as it scrolls in, centre ribs first, like a
+ * warehouse roller door. Scrubbed, so it travels with the scroll.
+ *
+ * The ribs render open (scaleY 0): no JS / reduced motion = a plain hard cut.
  */
 export default function ContainerWipe({
-  children,
-  className,
-  direction = "up",
+  from,
+  ribs = 7,
+  reach = "55vh",
 }: ContainerWipeProps) {
   const ref = useRef<HTMLDivElement>(null)
 
@@ -29,19 +34,19 @@ export default function ContainerWipe({
       const el = ref.current
       if (!el || prefersReducedMotion()) return
 
-      const from =
-        direction === "up"
-          ? "inset(100% 0% 0% 0%)"
-          : "inset(0% 100% 0% 0%)"
-
       gsap.fromTo(
-        el,
-        { clipPath: from },
+        el.querySelectorAll(".cw-rib"),
+        { scaleY: 1 },
         {
-          clipPath: "inset(0% 0% 0% 0%)",
-          duration: 1.1,
-          ease: EASE.travel,
-          scrollTrigger: { trigger: el, start: "top 78%" },
+          scaleY: 0,
+          ease: "none",
+          stagger: { each: 0.07, from: "center" },
+          scrollTrigger: {
+            trigger: el,
+            start: "top bottom",
+            end: "top 42%",
+            scrub: true,
+          },
         },
       )
     },
@@ -49,8 +54,26 @@ export default function ContainerWipe({
   )
 
   return (
-    <div ref={ref} className={className}>
-      {children}
+    <div
+      ref={ref}
+      aria-hidden="true"
+      className="relative h-0 pointer-events-none"
+      style={{ zIndex: "var(--z-seam)" }}
+    >
+      <div className="absolute inset-x-0 top-0 flex" style={{ height: reach }}>
+        {Array.from({ length: ribs }, (_, i) => (
+          <div
+            key={i}
+            className="cw-rib flex-1 origin-top"
+            style={{
+              background: from,
+              transform: "scaleY(0)",
+              // rib seams: the corrugation of a container door
+              boxShadow: "inset -1px 0 0 oklch(1 0 0 / 0.045), inset 0 -2px 0 oklch(0.78 0.15 75 / 0.35)",
+            }}
+          />
+        ))}
+      </div>
     </div>
   )
 }
