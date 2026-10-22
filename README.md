@@ -51,19 +51,31 @@ src/
 │   ├── Header.tsx        # sticky nav + mobile menu
 │   ├── Footer.tsx
 │   ├── ContactModal.tsx  # ".contact-popup" toggled via .active class
-│   └── *Section.tsx      # Hero, Intro, Problem, Solution, Shift, Tech, WhyUs, Partners, Faq
+│   ├── *Section.tsx      # Hero, Intro, Problem, Solution, Shift, Journey, Tech,
+│   │                     # WhyUs, Partners, Career, News, Faq (+ CertBand)
+│   ├── globe/            # HeroGlobe (three.js, lazy, no SSR)
+│   └── motion/           # TextReveal, CountUp, RouteLine, useMagnetic and the
+│                         # section seams ContainerWipe + LaneSeam
 └── lib/
+    ├── gsap.ts           # single GSAP/plugin registration, EASE/DUR/STAGGER,
+    │                     # prefersReducedMotion(), loader handoff (onLoaderDone)
     └── utils.ts          # cn() classname helper
 ```
 
 ## Architecture notes
 
-- **Single-page site.** `page.tsx` composes all sections in order. Nav links in
-  `Header.tsx` are in-page anchors (`#about`, `#services`, `#tech`, `#career`,
-  `#news`) — some target sections that do not exist yet (see [ROADMAP.md](./ROADMAP.md)).
+- **Single-page site.** `page.tsx` composes all sections in order, with the
+  section-transition seams between them (the transition map is the comment
+  there). Nav links in `Header.tsx` are in-page anchors (`#about`, `#services`,
+  `#tech`, `#career`, `#news`); `ClientLayout` glides to them, keeps the
+  header visible, updates the URL and moves focus.
+- **Loader gate.** Every visit starts at the top behind the loader (a
+  `beforeInteractive` script in `layout.tsx`); a `#hash` in the URL is replayed
+  once the gate opens. First-screen animations wait for `onLoaderDone()`.
 - **Animation.** `ClientLayout` initializes Lenis smooth scroll and wires it to
-  GSAP's ScrollTrigger. Section-level scroll animations use GSAP; respect
-  `prefers-reduced-motion` (the loader in `page.tsx` already does).
+  GSAP's ScrollTrigger (re-sorted after fonts, the loader and breakpoint flips,
+  because two scenes are pinned). Import GSAP only from `@/lib/gsap`. Every
+  effect needs a `prefers-reduced-motion` fallback that is the finished state.
 - **Contact modal** is opened imperatively by adding `.active` to `.contact-popup`.
 - **Brand palette:** legacy code uses eco green → blue gradient
   (`--primary`/`--secondary`); the redesign replaces it with the dark
